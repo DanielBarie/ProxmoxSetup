@@ -29,7 +29,7 @@ Had to install a basic Debian Bullseye ISO to get started.
 Proceeded along the lines of https://pve.proxmox.com/wiki/Install_Proxmox_VE_on_Debian_11_Bullseye.
 Ran into several issues on the way.
 
-# Issued that had to be fixed
+# Issues that had to be fixed
 - The Proxmox installer will overwrite the network configuration.
 - Console login, brought up network:
 ``` 
@@ -55,4 +55,30 @@ auto vmbr0
   ``` 
   systemctl restart networking
   ``` 
+  
+# Secure SSH Login with second factor (TOTP) in addition to password
+  - Install pam `sudo apt install libpam-google-authenticator`
+  - User to be authenticated must run `google-authenticator`
+  - this one is a good one: https://unix.stackexchange.com/questions/513011/sshd-denies-access-with-password-google-authenticator-combo
+  - edit `/etc/pam.d/sshd`:
+    - add: 
+      ``` 
+      # Google Authenticator
+      auth required pam_google_authenticator.so
+      ```
+    - maybe append `nullok` to above line to allow users not yet having set up 2FA to continue logging in.
+  - edit `/etc/ssh/sshd_config`:
+    - change:
+      ```
+      # Change to yes to enable challenge-response passwords (beware issues with
+      # some PAM modules and threads)
+      ChallengeResponseAuthentication yes
+      ```
+    - change:
+      ```
+      UsePAM yes
+      AuthenticationMethods keyboard-interactive
+      ```
+    
+  
   
