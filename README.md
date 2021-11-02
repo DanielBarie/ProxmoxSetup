@@ -51,4 +51,8 @@ auto vmbr0
   bridge-stp off                                                                                                          
   bridge-fd 0    
 ``` 
+- re-start networking
+  ``` 
+  systemctl restart networking
+  ``` 
   
