@@ -57,6 +57,8 @@ auto vmbr0
   ``` 
   
 # Secure SSH Login with second factor (TOTP) in addition to password
+  - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
+  - Test login functionality by opening another session!
   - Install pam `sudo apt install libpam-google-authenticator`
   - User to be authenticated must run `google-authenticator`
   - this one is a good one: https://unix.stackexchange.com/questions/513011/sshd-denies-access-with-password-google-authenticator-combo
@@ -79,6 +81,7 @@ auto vmbr0
       UsePAM yes
       AuthenticationMethods keyboard-interactive
       ```
+  - `systemctl restart sshd.service` after having made changes to `/etc/ssh/sshd_config`
     
   
   
