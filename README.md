@@ -73,6 +73,11 @@ auto vmbr0
     sparse
     nodes VirtNWLab  
   ```
+- Fun Fact: The GUI will display the "full" VM disk size. If you need to check the real size:
+  ```
+  zfs list
+  ```
+  
 # Fun with VMs
 ## The GNS3 VM
   - GNS3 provides a KVM image, this is what Proxmox is made for: https://github.com/GNS3/gns3-gui/releases
