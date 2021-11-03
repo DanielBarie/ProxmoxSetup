@@ -30,6 +30,7 @@ Proceeded along the lines of https://pve.proxmox.com/wiki/Install_Proxmox_VE_on_
 Ran into several issues on the way.
 
 # Issues that had to be fixed
+## Networking
 - The Proxmox installer will overwrite the network configuration.
 - Console login, brought up network:
 ``` 
@@ -56,6 +57,22 @@ auto vmbr0
   systemctl restart networking
   ``` 
   
+## ZFS Setup
+- Needs to be done manually (since we didn't run the "normal" installation).
+- Create ZFS pools for SSDs and HDDs
+- Create dataset for VM Image storage:
+  - `zfs create storage-ssd/vmdata `
+  - `zfs set compression=on storage-ssd/vmdata`
+- Set VM image storage location in `/etc/pve/storage.cfg`:
+  - Add newly created dataset, make sure it is sparse (else GNS3 VM images will be inflated to full size):
+  ```
+  zfspool: storage-ssd-vmdata
+    pool storage-ssd/vmdata
+    content images,rootdir 
+    mountpoint /storage-ssd/vmdata
+    sparse
+    nodes VirtNWLab  
+  ```
 # Fun with VMs
 ## The GNS3 VM
   - GNS3 provides a KVM image, this is what Proxmox is made for: https://github.com/GNS3/gns3-gui/releases
@@ -65,8 +82,8 @@ auto vmbr0
   - Create VM in Proxmox GUI (mostly leaving defaults untouched).
   - Note VM number.
   - Import Disks into VM: 
-    - `qm importdisk <VM number> GNS3\ VM-disk001.qcow2 storage-ssd`
-    - `qm importdisk <VM number> GNS3\ VM-disk002.qcow2 storage-ssd`
+    - `qm importdisk <VM number> GNS3\ VM-disk001.qcow2 storage-ssd-vmdata`
+    - `qm importdisk <VM number> GNS3\ VM-disk002.qcow2 storage-ssd-vmdata`
   - Attach these disks to the SATA controller
   - Set boot order to start from the fist disk.
  
