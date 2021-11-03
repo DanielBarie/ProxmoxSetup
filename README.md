@@ -105,6 +105,8 @@ auto vmbr1
     - `qm importdisk <VM number> GNS3\ VM-disk002.qcow2 storage-ssd-vmdata`
   - Attach these disks to the SATA controller
   - Set boot order to start from the fist disk.
+  - Set network interface to be on vmbr1
+  - Disable firewall on network interface (checkbox)!
  
 ## Made a mistake setting the boot order?
   - For whatever reason you'll end up being unable to shut down the VM (stuck in PXE)
@@ -117,7 +119,9 @@ auto vmbr1
   - Unzip
   - Convert to qcow2: `qemu-img convert -f raw -O qcow2 chr-6.48.5.img chr-6.48.5-disk-1.qcow2`
   - Import Image: `qm importdisk <VM ID> chr-6.48.5-disk-1.qcow2 storage-ssd-vmdata`
-  - Secure it:
+  - Set network interface to be on vmbr1
+  - Disable firewall on network interface!
+  - Secure it /set it up:
   ```
   user set admin password=<password>
   ip service disable telnet,ftp,www,api,api-ssl,winbox
