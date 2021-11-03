@@ -50,7 +50,19 @@ auto vmbr0
   gateway <ip gw>                                                                                                  
   bridge-ports eno2                                                                                                       
   bridge-stp off                                                                                                          
-  bridge-fd 0    
+  bridge-fd 0   
+  
+# bridge, connecting vms to
+# the outside world via NAT
+auto vmbr1
+  iface vmbr1 inet static
+  address 172.16.254.254/16
+  bridge-ports none
+  bridge-stp off
+  bridge-fd 0
+  post-up echo 1 > /proc/sys/net/ipv4/ip_forward
+  post-up iptables -t nat -A POSTROUTING -s '172.16.0.0/16' -o vmbr0 -j MASQUERADE
+  post-down iptables -t nat -F      
 ``` 
 - re-start networking
   ``` 
@@ -118,6 +130,13 @@ auto vmbr0
   ip proxy set enabled=no
   ip socks set enabled=no
   ip upnp set enabled=no
+  ip dns set servers=9.9.9.9,8.8.8.8
+  ip address add address=172.16.0.1/16 interface=ether1
+  ip dhcp-server network add address=172.16.0.0/16 dns-server=9.9.9.9
+  ip dhcp-server network set gateway=172.16.254.254
+  ip route add gateway=172.16.254.254
+  ip pool add name=GNSVMPool range=172.16.1.10-172.16.1.250
+  ip dhcp-server add address-pool=GNSVMPool disabled=no name=dhcpS1 interface=ether1
   ```
   
 # Secure SSH Login with second factor (TOTP) in addition to password
