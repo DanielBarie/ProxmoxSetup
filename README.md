@@ -69,6 +69,12 @@ auto vmbr0
     - `qm importdisk <VM number> GNS3\ VM-disk002.qcow2 storage-ssd`
   - Attach these disks to the SATA controller
   - Set boot order to start from the fist disk.
+ 
+## Made a mistake setting the boot order?
+  - For whatever reason you'll end up being unable to shut down the VM (stuck in PXE)
+  - `fuser /var/lock/qemu-server/lock-<VM number>.conf`
+  - `kill <PID holding the lock>`
+  - `qm stop <VM ID>`
   
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
