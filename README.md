@@ -56,6 +56,20 @@ auto vmbr0
   systemctl restart networking
   ``` 
   
+# Fun with VMs
+## The GNS3 VM
+  - GNS3 provides a KVM image, this is what Proxmox is made for: https://github.com/GNS3/gns3-gui/releases
+  - Create a nice place to store original images for VMs: `zfs create storage-hdd/originale`
+  - Download this to some nice place: `wget https://github.com/GNS3/gns3-gui/releases/download/v2.2.26/GNS3.VM.KVM.2.2.26.zip`
+  - Unzip, you'll end up with three files: Two qcow2 disk images and a bash script.
+  - Create VM in Proxmox GUI (mostly leaving defaults untouched).
+  - Note VM number.
+  - Import Disks into VM: 
+    - `qm importdisk <VM number> GNS3\ VM-disk001.qcow2 storage-ssd`
+    - `qm importdisk <VM number> GNS3\ VM-disk002.qcow2 storage-ssd`
+  - Attach these disks to the SATA controller
+  - Set boot order to start from the fist disk.
+  
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
   - Test login functionality by opening another session!
