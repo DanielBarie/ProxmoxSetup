@@ -40,7 +40,7 @@ ip route add default via <gw address>
 - connected to server, accessed web interface https://<ip>:8006
 - did as told, added vmbr0
 - networking snafu
-- back to console (add eno2 to bridge)
+- back to console (add eno2 to bridge) in /etc/network/interfaces:
 ``` 
 auto eno2                                                                                                               
 iface eno2 inet manual                                                                                                                                                                                                                          
@@ -77,6 +77,8 @@ auto vmbr0
   ```
   zfs list
   ```
+- Create a Dataset for storing ISOs because we don't like the default setting (don't want to fill up the system installation SSD). So we want to store ISOs on the storage-hdd pool:
+   - `zfs create -o mountpoint=/var/lib/vz/template/iso storage-hdd/iso`
   
 # Fun with VMs
 ## The GNS3 VM
