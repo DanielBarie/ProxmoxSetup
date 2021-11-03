@@ -98,6 +98,26 @@ auto vmbr0
   - `kill <PID holding the lock>`
   - `qm stop <VM ID>`
   
+## Mikrotik CHR Setup
+  - Get current image: `https://download.mikrotik.com/routeros/6.48.5/chr-6.48.5.img.zip`
+  - Unzip
+  - Convert to qcow2: `qemu-img convert -f raw -O qcow2 chr-6.48.5.img chr-6.48.5-disk-1.qcow2`
+  - Import Image: `qm importdisk <VM ID> chr-6.48.5-disk-1.qcow2 storage-ssd-vmdata`
+  - Secure it:
+  ```
+  user set admin password=<password>
+  ip service disable telnet,ftp,www,api,api-ssl,winbox
+  tool mac-server set allowed-interface-list=none
+  tool mac-server mac-winbox set allowed-interface-list=none
+  tool mac-server ping set enabled=no
+  tool bandwidth-server set enabled=no
+  ip neighbor discovery-settings set discover-interface-list=none 
+  ip dns set allow-remote-requests=no
+  ip proxy set enabled=no
+  ip socks set enabled=no
+  ip upnp set enabled=no
+  ```
+  
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
   - Test login functionality by opening another session!
