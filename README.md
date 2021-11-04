@@ -62,6 +62,11 @@ auto vmbr1
   bridge-fd 0
   post-up echo 1 > /proc/sys/net/ipv4/ip_forward
   post-up iptables -t nat -A POSTROUTING -s '172.16.0.0/16' -o vmbr0 -j MASQUERADE
+  # do NAT/Port Translation for incoming connecction to VMs
+  # target ip/port (VM running GNS3) is 172.16.10.1:80
+  # source is something coming in to vmbr0 on port 9001 proto tcp
+  # rinse, repeat for as many vms as you may have.
+  post-up iptables -t nat -A PREROUTING -i vmbr0 -p tcp --dport 9001 -j DNAT --to 172.16.10.1:80
   post-down iptables -t nat -F      
 ``` 
 - re-start networking
@@ -98,7 +103,7 @@ auto vmbr1
   - Create a nice place to store original images for VMs: `zfs create storage-hdd/originale`
   - Download this to some nice place: `wget https://github.com/GNS3/gns3-gui/releases/download/v2.2.26/GNS3.VM.KVM.2.2.26.zip`
   - Unzip, you'll end up with three files: Two qcow2 disk images and a bash script.
-  - Create VM in Proxmox GUI (mostly leaving defaults untouched).
+  - Create VM in Proxmox GUI (mostly leaving defaults untouched EXCEPT FOR CPU TYPE which must be set to HOST (else you'd have to disable KVM in the GNS3 VM itself).
   - Note VM number.
   - Import Disks into VM: 
     - `qm importdisk <VM number> GNS3\ VM-disk001.qcow2 storage-ssd-vmdata`
