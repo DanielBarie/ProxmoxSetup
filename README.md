@@ -72,7 +72,10 @@ auto vmbr1
   #
   # any other placement of the server? get a vpn up and keep the GNS3 VMs in
   # the little walled garden of the Virtualization Host.
-  # see setting up a docker host for running the vpn server
+  # see setting up a docker host for running the ipsec vpn server
+  # we thus provide an authenticated secure connection for entitled users
+  iptables -t nat -A PREROUTING -i vmbr0 -p udp --dport 500 -j DNAT --to 172.16.2.10:500
+  iptables -t nat -A PREROUTING -i vmbr0 -p udp --dport 4500 -j DNAT --to 172.16.2.10:4500
   post-down iptables -t nat -F      
 ``` 
 - re-start networking (this will make all VMs lose connection until they have been RESTARTED!)
@@ -173,6 +176,8 @@ GNS3 VMs.
 So we make a Debian VM for running Docker which in turn will run a container 
 providing the VPN server (and whatnot else...).
 See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instructions.
+We need to make some modifications to that baseline config, e.g. NAT for getting the clients
+out into our little walled garden (else they will be stuck in our container).
 
   
 # Secure SSH Login with second factor (TOTP) in addition to password
