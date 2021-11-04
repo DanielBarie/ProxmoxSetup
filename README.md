@@ -107,6 +107,13 @@ auto vmbr1
   - Set boot order to start from the fist disk.
   - Set network interface to be on vmbr1
   - Disable firewall on network interface (checkbox)!
+  - Start quemu guest extensions (in GNS VM):
+  ```
+  sudo apt-get update
+  sudo apt-get install qemu-guest-agent
+  sudo systemctl start qemu-guest-agent
+  ```
+  
  
 ## Made a mistake setting the boot order?
   - For whatever reason you'll end up being unable to shut down the VM (stuck in PXE)
