@@ -69,10 +69,13 @@ auto vmbr1
   post-up iptables -t nat -A PREROUTING -i vmbr0 -p tcp --dport 9001 -j DNAT --to 172.16.10.1:80
   post-down iptables -t nat -F      
 ``` 
-- re-start networking
+- re-start networking (this will make all VMs lose connection until they have been RESTARTED!)
   ``` 
   systemctl restart networking
   ``` 
+  
+- check if all these new rules were accepted:
+  `iptables --table nat --list`
   
 ## ZFS Setup
 - Needs to be done manually (since we didn't run the "normal" installation).
