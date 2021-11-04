@@ -66,7 +66,13 @@ auto vmbr1
   # target ip/port (VM running GNS3) is 172.16.10.1:80
   # source is something coming in to vmbr0 on port 9001 proto tcp
   # rinse, repeat for as many vms as you may have.
-  post-up iptables -t nat -A PREROUTING -i vmbr0 -p tcp --dport 9001 -j DNAT --to 172.16.10.1:80
+  # the only case i'd do this is when the server running the
+  # VMs is in a trusted network (e.g. in a lab having its own firewalled subnet)
+  # post-up iptables -t nat -A PREROUTING -i vmbr0 -p tcp --dport 9001 -j DNAT --to 172.16.10.1:80
+  #
+  # any other placement of the server? get a vpn up and keep the GNS3 VMs in
+  # the little walled garden of the Virtualization Host.
+  # see setting up a docker host for running the vpn server
   post-down iptables -t nat -F      
 ``` 
 - re-start networking (this will make all VMs lose connection until they have been RESTARTED!)
@@ -136,7 +142,7 @@ auto vmbr1
   - Import Image: `qm importdisk <VM ID> chr-6.48.5-disk-1.qcow2 storage-ssd-vmdata`
   - Set network interface to be on vmbr1
   - Disable firewall on network interface!
-  - Secure it /set it up:
+  - Secure it /set it up: (VM running containers will get a fixed dhcp lease)
   ```
   user set admin password=<password>
   ip service disable telnet,ftp,www,api,api-ssl,winbox
@@ -154,9 +160,20 @@ auto vmbr1
   ip dhcp-server network add address=172.16.0.0/16 dns-server=9.9.9.9
   ip dhcp-server network set gateway=172.16.254.254
   ip route add gateway=172.16.254.254
-  ip pool add name=GNSVMPool range=172.16.1.10-172.16.1.250
+  ip pool add name=GNSVMPool range=172.16.10.1-172.16.10.250
+  ip pool add name=UtilServer range=172.16.2.10-172.16.2.200
+  ip dhcp-server lease add mac-address=BA:C0:4C:1D:24:73 address=172.16.2.10
   ip dhcp-server add address-pool=GNSVMPool disabled=no name=dhcpS1 interface=ether1
   ```
+  
+# Docker VM for running containers
+Since the virtualization host is most probably not in a firewalled lab 
+but accessible from within a larger part of the network we need some way of protecting the
+GNS3 VMs.
+So we make a Debian VM for running Docker which in turn will run a container 
+providing the VPN server (and whatnot else...).
+See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instructions.
+
   
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
