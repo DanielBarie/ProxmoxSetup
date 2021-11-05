@@ -169,17 +169,40 @@ auto vmbr1
   ip dhcp-server add address-pool=GNSVMPool disabled=no name=dhcpS1 interface=ether1
   ```
   
-# Docker VM for running containers
+# DockerRunner VM for running containers
 Since the virtualization host is most probably not in a firewalled lab 
 but accessible from within a larger part of the network we need some way of protecting the
-GNS3 VMs.
+GNS3 VMs (or else...).
 So we make a Debian VM for running Docker which in turn will run a container 
 providing the VPN server (and whatnot else...).
 See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instructions.
-We need to make some modifications to that baseline config, e.g. NAT for getting the clients
-out into our little walled garden (else they will be stuck in our container).
+- have a nice `env` file:
+  ```
+  VPN_IPSEC_PSK=<lab psk>
+  VPN_USER=<lab user>
+  VPN_PASSWORD=<lab password>  
+  ```
+- start container:
+  ```
+  docker run \
+    --name ipsec-vpn-server \
+    --env-file ./vpn.env \
+    --restart=always \
+    -v ikev2-vpn-data:/etc/ipsec.d \
+    -p 500:500/udp \
+    -p 4500:4500/udp \
+    -d --privileged \
+    hwdsl2/ipsec-vpn-server
+  ```
+- We need to make some modifications to that baseline config to let the clients see our internal servers/VMs:
+  - Take the entire 172.16.0.0/16 subnet as being private.
+    - get shell to change `run.sh` inside container:  `docker exec -it ipsec-vpn-server env TERM=xterm bash -l
+      ``` 
+      #virtual-private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/12,%v4:!$L2TP_NET,%v4:!$XAUTH_NET
+      virtual-private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/16,%v4:!$L2TP_NET,%v4:!$XAUTH_NET 
+      ```
+- re-start container: `docker restart ipsec-vpn-server`
 
-  
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
   - Test login functionality by opening another session!
