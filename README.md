@@ -74,6 +74,8 @@ auto vmbr1
   # the little walled garden of the Virtualization Host.
   # see setting up a docker host for running the ipsec vpn server
   # we thus provide an authenticated secure connection for entitled users
+  # the ip of that container host needs to be assigned statically or
+  # by means of a dhcp reservation (this is what we do)
   iptables -t nat -A PREROUTING -i vmbr0 -p udp --dport 500 -j DNAT --to 172.16.2.10:500
   iptables -t nat -A PREROUTING -i vmbr0 -p udp --dport 4500 -j DNAT --to 172.16.2.10:4500
   post-down iptables -t nat -F      
