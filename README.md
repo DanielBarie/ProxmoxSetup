@@ -137,6 +137,7 @@ auto vmbr1
   - Create a Master VM with all appliances (Webterm, Kali, CHR,...) installed.
   - Convert it to template (GUI) 
   - Clone it (CLI): `qm clone <id to be cloned> <id of clone>` 
+  
   Now, how do we keep these apart and serve a particular instance each time to each student?
   There's some options:
   - Cloud Init for setting IP Adresses. Won't do that because we'd have to install the cloud init stuff on the GNS3 VM. (Can be done, no worries.)
