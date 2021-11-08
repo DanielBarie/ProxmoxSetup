@@ -1,4 +1,4 @@
-# ProxmoxSetup
+# Using Proxmox to serve GNS3 VMs for a Student Networking Lab.
 
 Our goal is to set up a Proxmox Server so as to be able to provide students with indiviual instances of the GNS3 VM. 
 We need to do this efficiently because the number of students is quite large. 
