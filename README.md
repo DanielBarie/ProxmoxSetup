@@ -133,10 +133,18 @@ auto vmbr1
   sudo systemctl start qemu-guest-agent
   ```
   ### Orchestrate Multiple Instances of the GNS3 VM
-  We'd love to have multiple instances of the GNS3 VM running at the same time so each student will be able to use a personalized instance. Now, how do we keep these apart and serve a particular instance each time to each student?
+  We'd love to have multiple instances of the GNS3 VM running at the same time so each student will be able to use a personalized instance. 
+  - Create a Master VM with all appliances (Webterm, Kali, CHR,...) installed.
+  - Convert it to template (GUI) 
+  - Clone it (CLI): `qm clone <id to be cloned> <id of clone>` 
+  Now, how do we keep these apart and serve a particular instance each time to each student?
   There's some options:
-  - Cloud Init for setting IP Adresses
-  - Setting IP Adresses via DHCP. 
+  - Cloud Init for setting IP Adresses. Won't do that because we'd have to install the cloud init stuff on the GNS3 VM. (Can be done, no worries.)
+  - Setting IP Adresses via DHCP. When cloning a VM, PVE will randomly assign a MAC address to the clone. So we need to fix that to be able to assign a certain IP to the instance via DHCP.
+  
+ We'll go for setting IPs via DHCP.
+ #### Setting IPs via DHCP.
+- Set a known MAC: `qm set <ID> -net0 virtio=xx:xx:xx:xx:xx:xx,bridge=vmbr1`
   
  
 ## Made a mistake setting the boot order?
