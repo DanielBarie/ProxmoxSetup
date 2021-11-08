@@ -1,5 +1,10 @@
 # ProxmoxSetup
-WhatAMess
+
+Our goal is to set up a Proxmox Server so as to be able to provide students with indiviual instances of the GNS3 VM. 
+We need to do this efficiently because the number of students is quite large. 
+So we'll configure one instance of the GNS3 VM with all necessary appliances and create a template thereof.
+The template will be used to create clones - one for each student.
+These clones may be spun up before the lab session and shut down afterwards.
 
 
 # Prerequisites
