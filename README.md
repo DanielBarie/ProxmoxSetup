@@ -6,6 +6,16 @@ So we'll configure one instance of the GNS3 VM with all necessary appliances and
 The template will be used to create clones - one for each student.
 These clones may be spun up before the lab session and shut down afterwards.
 
+There are some base assumptions:
+- Max. number of concurrent students per lab session is approx. 25.
+
+And some constraints:
+- The server location is outside the lab.
+- The server is located in a separate IP subnet with other servers.
+- Network access to various subnets from the student lab is impossible whereas the server may freely access these.
+- Network access to the outside world (i.e. the Internet) from the student lab is only possible via proxy whereas the server may freely access any internet location.
+- Access to the VMs shall only be possible during lab hours.
+
 
 # Prerequisites
 So I have this nice litte server...
