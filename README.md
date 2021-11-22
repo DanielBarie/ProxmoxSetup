@@ -200,6 +200,10 @@ auto vmbr1
   ip dhcp-server add address-pool=GNSVMPool disabled=no name=dhcpS1 interface=ether1
   ```
   
+# Setting Up Container Based (LXC) Proxy
+  - https://blog.bj13.us/2016/04/08/roll-your-own-http-proxy-with-squid-alpine-and-lxc.html
+  - https://archives.flockport.com/new-micro-containers-based-on-alpine-linux/
+  
 # DockerRunner VM for running containers
 Since the virtualization host is most probably not in a firewalled lab 
 but accessible from within a larger part of the network we need some way of protecting the
