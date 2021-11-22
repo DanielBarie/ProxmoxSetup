@@ -203,8 +203,18 @@ auto vmbr1
   ```
   
 # Setting Up Container Based (LXC) Proxy
+These are generic non-Proxmox:
   - https://blog.bj13.us/2016/04/08/roll-your-own-http-proxy-with-squid-alpine-and-lxc.html
   - https://archives.flockport.com/new-micro-containers-based-on-alpine-linux/
+
+ This one is for Proxmox (much better..):
+  - https://pve.proxmox.com/pve-docs/chapter-pct.html
+
+## Alpine Linux Base Image
+  - `apk add squid`
+  - `apk add dansguardian`
+  
+
   
 # DockerRunner VM for running containers
 Since the virtualization host is most probably not in a firewalled lab 
