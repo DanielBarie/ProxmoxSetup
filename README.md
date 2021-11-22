@@ -213,6 +213,8 @@ These are generic non-Proxmox:
 ## Alpine Linux Base Image
   - `apk add squid`
   - `apk add dansguardian`
+  - `apk add nano´
+  - `apk add mc`
   
 
   
