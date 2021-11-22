@@ -14,7 +14,10 @@ parser.add_argument("-sid", type=int,
 parser.add_argument("-tid", type=int,
                     help="First ID (target ID) of clones to be assigned.")
 parser.add_argument("-smac", type=int,
-                    help="Start MAC Address for incremental assignment of MAC Adresses to clones.")
+                    help="TODO: Start MAC Address for incremental assignment of MAC Adresses to clones.")
+parser.add_argument("-br", 
+                    help="VM Bridge to attach VMs to..")
+
 
 args=parser.parse_args()
 
@@ -22,6 +25,8 @@ print("Number of instances to be created: ",args.n)
 print("Source (i.e. Template) ID: ",args.sid)
 print("Source (i.e. Template) ID: ",args.tid)
 print("Start MAC Address for Clones: ",args.smac)
+print("VM Bridge: ",args.br)
+
 
 if args.n is None:
 	print("Number of clones must be given.")
@@ -37,6 +42,9 @@ if args.tid is None:
 	sys.exit()
 if args.smac is None:
 	print ("No start MAC Address given. Will generate random start MAC Address with subsequent numbering according to clone IDs.")
+if args.br is None:
+	print ("No VM Bridge given. Will use vmbr1.")
+
 
 # check if vm to be cloned exists
 print("Checking if ID to be cloned exists. Listing VMs...")
@@ -114,11 +122,16 @@ else:
 
 # now, start setting mac addresses of newly created clones
 macstr = hex(mac[0])[2:].zfill(2)+":"+hex(mac[1])[2:].zfill(2)+":"+hex(mac[2])[2:].zfill(2)+":"+hex(mac[3])[2:].zfill(2)+":"+hex(mac[4])[2:].zfill(2)+":"
+# set bridge
+if args.br is None:
+	vmbr="vmbr1"
+else:
+	vmbr=args.br
 for count in range(1,args.n+1):
 	print("Setting MAC Address of Clone #", str(count)+"\n")
 	# proxmox qm doesn't accept single-digits in mac addresses.
 	# so these need to be zero padded (zfill)	macstr = hex(mac[0])[2:].zfill(2)+":"+hex(mac[1])[2:].zfill(2)+":"+hex(mac[2])[2:].zfill(2)+":"+hex(mac[3])[2:].zfill(2)+":"+hex(mac[4])[2:].zfill(2)+":"
-	result = subprocess.run(["qm", "set", str(args.tid+count-1), "-net0", "virtio,macaddr="+macstr+hex(count)[2:].zfill(2)+",bridge=vmbr1"], capture_output=True, text=True)
+	result = subprocess.run(["qm", "set", str(args.tid+count-1), "-net0", "virtio,macaddr="+macstr+hex(count)[2:].zfill(2)+",bridge="+vmbr], capture_output=True, text=True)
 	if result.stderr:
 		print ("Encountered an error:")
 		print (result.stderr)
