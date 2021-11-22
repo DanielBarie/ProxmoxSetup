@@ -213,8 +213,9 @@ These are generic non-Proxmox:
 ## Alpine Linux Base Image
   - `apk add squid`
   - `apk add dansguardian`
-  - `apk add nano´
+  - `apk add nano`
   - `apk add mc`
+  - `apk add openrc --no-cache`
   - Configuration roughly according to https://wiki.ubuntuusers.de/Inhaltsfilter/
   
   
