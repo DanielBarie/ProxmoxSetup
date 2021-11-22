@@ -215,6 +215,8 @@ These are generic non-Proxmox:
   - `apk add dansguardian`
   - `apk add nano´
   - `apk add mc`
+  - Configuration roughly according to https://wiki.ubuntuusers.de/Inhaltsfilter/
+  
   
 
   
