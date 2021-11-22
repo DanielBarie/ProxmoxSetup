@@ -75,7 +75,9 @@ auto vmbr1
   bridge-ports none
   bridge-stp off
   bridge-fd 0
+  # activate kernel ip forwarding
   post-up echo 1 > /proc/sys/net/ipv4/ip_forward
+  # nat all outgoing connections 
   post-up iptables -t nat -A POSTROUTING -s '172.16.0.0/16' -o vmbr0 -j MASQUERADE
   # do NAT/Port Translation for incoming connecction to VMs
   # target ip/port (VM running GNS3) is 172.16.10.1:80
