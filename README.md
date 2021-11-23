@@ -75,7 +75,9 @@ auto vmbr1
   bridge-ports none
   bridge-stp off
   bridge-fd 0
+  # activate kernel ip forwarding
   post-up echo 1 > /proc/sys/net/ipv4/ip_forward
+  # nat all outgoing connections 
   post-up iptables -t nat -A POSTROUTING -s '172.16.0.0/16' -o vmbr0 -j MASQUERADE
   # do NAT/Port Translation for incoming connecction to VMs
   # target ip/port (VM running GNS3) is 172.16.10.1:80
@@ -91,8 +93,8 @@ auto vmbr1
   # we thus provide an authenticated secure connection for entitled users
   # the ip of that container host needs to be assigned statically or
   # by means of a dhcp reservation (this is what we do)
-  iptables -t nat -A PREROUTING -i vmbr0 -p udp --dport 500 -j DNAT --to 172.16.2.10:500
-  iptables -t nat -A PREROUTING -i vmbr0 -p udp --dport 4500 -j DNAT --to 172.16.2.10:4500
+  post-up iptables -t nat -A PREROUTING -i vmbr0 -p udp --dport 500 -j DNAT --to 172.16.2.10:500
+  post-up iptables -t nat -A PREROUTING -i vmbr0 -p udp --dport 4500 -j DNAT --to 172.16.2.10:4500
   post-down iptables -t nat -F      
 ``` 
 - re-start networking (this will make all VMs lose connection until they have been RESTARTED!)
@@ -199,6 +201,26 @@ auto vmbr1
   ip dhcp-server lease add mac-address=BA:C0:4C:1D:24:73 address=172.16.2.10
   ip dhcp-server add address-pool=GNSVMPool disabled=no name=dhcpS1 interface=ether1
   ```
+  
+# Setting Up Container Based (LXC) Proxy
+These are generic non-Proxmox:
+  - https://blog.bj13.us/2016/04/08/roll-your-own-http-proxy-with-squid-alpine-and-lxc.html
+  - https://archives.flockport.com/new-micro-containers-based-on-alpine-linux/
+
+ This one is for Proxmox (much better..):
+  - https://pve.proxmox.com/pve-docs/chapter-pct.html
+
+## Alpine Linux Base Image
+  - `apk add squid`
+  - `apk add dansguardian`
+  - `apk add nano`
+  - `apk add mc`
+  - `apk add openrc --no-cache`
+  - Configuration roughly according to https://wiki.ubuntuusers.de/Inhaltsfilter/
+  - And https://wiki.alpinelinux.org/wiki/Setting_up_Explicit_Squid_Proxy
+  
+  
+
   
 # DockerRunner VM for running containers
 Since the virtualization host is most probably not in a firewalled lab 
