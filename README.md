@@ -217,6 +217,7 @@ These are generic non-Proxmox:
   - `apk add mc`
   - `apk add openrc --no-cache`
   - Configuration roughly according to https://wiki.ubuntuusers.de/Inhaltsfilter/
+  - And https://wiki.alpinelinux.org/wiki/Setting_up_Explicit_Squid_Proxy
   
   
 
