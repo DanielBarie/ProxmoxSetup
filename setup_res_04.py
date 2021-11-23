@@ -17,6 +17,9 @@ parser.add_argument("-smac", type=int,
                     help="TODO: Start MAC Address for incremental assignment of MAC Adresses to clones.")
 parser.add_argument("-br", 
                     help="VM Bridge to attach VMs to..")
+parser.add_argument("-name", 
+                    help="String to prepend in front of name when cloning..")
+
 
 
 args=parser.parse_args()
@@ -44,6 +47,13 @@ if args.smac is None:
 	print ("No start MAC Address given. Will generate random start MAC Address with subsequent numbering according to clone IDs.")
 if args.br is None:
 	print ("No VM Bridge given. Will use vmbr1.")
+if args.name is None:
+	print ("No Name Agrument for clones given..")
+	prependName=""
+else:
+	prependName = args.name
+
+
 
 
 # check if vm to be cloned exists
@@ -85,11 +95,13 @@ for count in range(0,args.n):
 		sys.exit()
 print ("OK.")
 
+
+
 for count in range(1,args.n+1):
 	print("Creating clone #", count, " of template.\n")
 	# argument for --name needs to be separate argument for subprocess.run
 	# new name needs to be compatible with dns naming conventions
-	result = subprocess.run(["qm", "clone", str(args.sid), str(args.tid+count-1), "--name", "GNS3-Clone"+str(count)+"-of-SID"+str(args.sid)], capture_output=True, text=True)
+	result = subprocess.run(["qm", "clone", str(args.sid), str(args.tid+count-1), "--name", "prependName"+str(count)+"-of-SID"+str(args.sid)], capture_output=True, text=True)
 	if result.stderr:
 		print ("Encountered an error:")
 		print (result.stderr)
