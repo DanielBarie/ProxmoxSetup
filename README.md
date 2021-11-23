@@ -197,6 +197,7 @@ auto vmbr1
   ip dhcp-server network set gateway=172.16.254.254
   ip route add gateway=172.16.254.254
   ip pool add name=GNSVMPool range=172.16.10.1-172.16.10.250
+  ip pool add name=KaliPool range=172.16.11.10-172.16.11.200
   ip pool add name=UtilServer range=172.16.2.10-172.16.2.200
   ip dhcp-server lease add mac-address=BA:C0:4C:1D:24:73 address=172.16.2.10
   ip dhcp-server add address-pool=GNSVMPool disabled=no name=dhcpS1 interface=ether1
