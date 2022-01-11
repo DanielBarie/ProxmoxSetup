@@ -140,7 +140,7 @@ auto vmbr1
     - `qm importdisk <VM number> GNS3\ VM-disk001.qcow2 storage-ssd-vmdata`
     - `qm importdisk <VM number> GNS3\ VM-disk002.qcow2 storage-ssd-vmdata`
   - Attach these disks to the SATA controller
-  - Set boot order to start from the fist disk.
+  - Set boot order to start from the fist disk (Options, Boot Order).
   - Set network interface to be on vmbr1
   - Disable firewall on network interface (checkbox)!
   - Start quemu guest extensions (in GNS VM):
