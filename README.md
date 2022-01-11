@@ -149,6 +149,10 @@ auto vmbr1
   sudo apt-get install qemu-guest-agent
   sudo systemctl start qemu-guest-agent
   ```
+  - Set locale `sudo dpkg-reconfigure locales`
+  - To fix annoying keyboard: `sudo dpkg-reconfigure keyboard-configuration`, happily overriding previously set defaults. 
+  - reboot: `sudo reboot`
+  
   ### Orchestrate Multiple Instances of the GNS3 VM
   We'd love to have multiple instances of the GNS3 VM running at the same time so each student will be able to use a personalized instance. 
   - Create a Master VM with all appliances (Webterm, Kali, CHR,...) installed.
