@@ -105,6 +105,10 @@ auto vmbr1
 - check if all these new rules were accepted:
   `iptables --table nat --list`
   
+ - delete a rule (by line number):
+  - `iptables --table nat -L --line-numbers` to see the rules and line numbers
+  - `iptables -t nat -D PREROUTING <line number>`
+  
 ## ZFS Setup
 - Needs to be done manually (since we didn't run the "normal" installation).
 - Create ZFS pools for SSDs and HDDs
@@ -177,7 +181,7 @@ auto vmbr1
   
 ## Can't connect to a remote instance of GNS3 
 - Check if there's a version mismatch between GUI/Controller and the remote VM. The error message is really, really well hidden. Guys, can't you make this a pop up? 
-  
+ ![Screenshot with small error message top right](https://github.com/DanielBarie/ProxmoxSetup/blob/main/gns_version_mismatch.png "Error Message") 
   
 ## Mikrotik CHR Setup
   - Get current image: `https://download.mikrotik.com/routeros/6.48.5/chr-6.48.5.img.zip`
