@@ -175,6 +175,10 @@ auto vmbr1
   - `kill <PID holding the lock>`
   - `qm stop <VM ID>`
   
+## Can't connect to a remote instance of GNS3 
+- Check if there's a version mismatch between GUI/Controller and the remote VM. The error message is really, really well hidden. Guys, can't you make this a pop up? 
+  
+  
 ## Mikrotik CHR Setup
   - Get current image: `https://download.mikrotik.com/routeros/6.48.5/chr-6.48.5.img.zip`
   - Unzip
