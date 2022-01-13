@@ -306,7 +306,7 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
 - Watch out: Run all your appliances on the same VM/Server. Don't mix. 
 - Take special care with the docker containers (e.g. webterm). They default to the local VM and won't be able to communicate with appliances running on another VM
 - Example: Running a DHCP Server (Mikrotik CHR) on a remote VM, adding an instance of webterm set to DHCP. Webterm won't get a lease. You won't even see DHCP packets on a link when capturing.
- ![Screenshot with appliances on different VMs](https://github.com/DanielBarie/ProxmoxSetup/blob/main/gns_version_mismatch.png "Appliances on different hosts won't communicate.") 
+ ![Screenshot with appliances on different VMs](https://github.com/DanielBarie/ProxmoxSetup/blob/main/gns3_dockerlocal_othersremote.png "Appliances on different hosts won't communicate.") 
                                                 
 ## Go big or go bust
 Get some real guests going
