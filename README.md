@@ -296,9 +296,21 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
       ```
   - `systemctl restart sshd.service` after having made changes to `/etc/ssh/sshd_config`
     
-  # GNS3 related stuff
-  ## Tired of uploading huge imaged via the Web UI?
+# GNS3 related stuff
+## Tired of uploading huge imaged via the Web UI?
   - ssh into gns3 vm
   - wget the image to `/opt/gns3/images/<subdir according to image type` e.g. `/opt/gns3/images/QEMU` for .qcow2
   - saves so much time :)
-  
+
+## Go big or go bust
+Get some real guests going
+### Ubuntu 20.04 LTS
+The Ubuntu template supplied with the GUI is an old one (v18 LTS). To use a newer one: https://www.gns3.com/marketplace/appliances/ubuntu-cloud-guest                                               
+                                                
+                                                
+                                                
+                                       
+
+                                                
+                                                
+                                                
