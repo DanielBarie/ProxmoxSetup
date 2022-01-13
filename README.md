@@ -305,7 +305,8 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
 ## Go big or go bust
 Get some real guests going
 ### Ubuntu 20.04 LTS
-The Ubuntu template supplied with the GUI is an old one (v18 LTS). To use a newer one: https://www.gns3.com/marketplace/appliances/ubuntu-cloud-guest                                               
+- The Ubuntu template supplied with the GUI is an old one (v18 LTS). To use a newer one: https://www.gns3.com/marketplace/appliances/ubuntu-cloud-guest
+- Be patient when logging in with ubuntu/ubuntu. It will take a while to complete the cloud init for setting username/password.
                                                 
                                                 
                                                 
