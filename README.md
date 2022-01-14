@@ -241,6 +241,7 @@ but accessible from within a larger part of the network we need some way of prot
 GNS3 VMs (or else...).
 So we make a Debian VM for running Docker which in turn will run a container 
 providing the VPN server (and whatnot else...).
+- `apt-get install unattended-upgrades`
 See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instructions.
 - have a nice `env` file:
   ```
@@ -276,7 +277,7 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
   - When installing the Gitlab package, I set `EXTERNAL_URL="http://versuchsanleitungen.labor"` 
   - Loads of errors during installation related to permissions. 
   - Me being me: I don't have the time to fix this. Let's try something else.
- - There's a pre-packaged docker container ready for installation:
+- There's a pre-packaged docker container ready for installation:
   - https://docs.gitlab.com/ee/install/docker.html
   - There already is a VM in Proxmox set up for running docker containers (dockerrunner, see above)
   - So let's give this a shot.
