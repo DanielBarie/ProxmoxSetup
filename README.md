@@ -242,6 +242,7 @@ GNS3 VMs (or else...).
 So we make a Debian VM for running Docker which in turn will run a container 
 providing the VPN server (and whatnot else...).
 - `apt-get install unattended-upgrades`
+- `apt-get install docker-compose`
 See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instructions.
 - have a nice `env` file:
   ```
