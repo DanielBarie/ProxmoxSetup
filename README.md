@@ -329,18 +329,59 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
   
 # Docker Container running dnsmasq 
 This one is for our local DNS resolution so we may have a fake TLD (labor) and various hosts.
-Based on https://github.com/DrPsychick/docker-dnsmasq
-Trimmed DHCP functionality because we'll run a separate DHCP server. 
+https://github.com/jpillora/docker-dnsmasq and https://github.com/DrPsychick/docker-dnsmasq (health check)
 - create a nice directory to work in 
 - get necessary file (lazy, don't clone repo): 
-  - `docker run --rm -it drpsychick/dnsmasq:latest --test`
-  - `docker run --rm -it drpsychick/dnsmasq:latest --export > default.env`
-  - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/healthcheck.sh`
-  - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/envreplace.sh`
-  - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/dnsmasq.conf.tmpl`
-  - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/Dockerfile`
+  - create Dockerfile:
+    ```
+    ARG ALPINE_VERSION=edge
+    FROM alpine:$ALPINE_VERSION
+    RUN apk --no-cache add dnsmasq
+    # for development/changes to files inside container
+    RUN apk --no-cache add nano
+    COPY healthcheck.sh /
+    RUN chmod +x /healthcheck.sh
+    # cannot do this with hosts file because it will be maintained by docker daemon
+    # would be too easy
+    # we instead have to rely on options in dnsmasq.conf for settung specific hosts
+    #COPY hosts /etc/hosts
+    #get prepared dnsmasq config file
+    COPY dnsmasq.conf /etc/dnsmasq.conf
+    # We only do DNS, no DHCP.
+    EXPOSE 53 53/udp
+    HEALTHCHECK --interval=10s --timeout=3s CMD /healthcheck.sh
+    # do environment modifications before starting the dnsmasq service
+    # https://stackoverflow.com/questions/38302867/how-to-update-etc-hosts-file-in-docker-image-during-docker-build
+    # dooh. we don't use docker-compose.
+    # dooh. entry point line modification:
+    # can't put it at the end of the entrypoint line (because that will be handed to dnsmasq as an argument)
+    # can't put it at the beginning because file does not (yet?) exist
+    #ENTRYPOINT ["echo 172.16.2.10  versuchsanleitungen.labor >> /etc/hosts", "/envreplace.sh"]
+    #ENTRYPOINT ["/envreplace.sh"]
+    ENTRYPOINT ["dnsmasq"]
+    # we're running in the foreground (non-daemon)
+    CMD ["-k", "--log-facility=-"]
+    ```
+  - create dnsmasq.conf:
+    ```
+    #log all dns queries
+    log-queries
+    #dont use hosts nameservers
+    no-resolv
+    #use cloudflare/quad9 as default nameservers,
+    server=9.9.9.9
+    server=1.1.1.1
+    strict-order
+    #explicitly define host-ip mappings
+    # this is our gitlab server hosting lab instructions
+    address=/versuchsanleitungen.labor/172.16.2.10
+    #define local network
+    local=/labor/172.16.in-addr.arpa/
+    ```
 - `docker build -t dbarie/dnsmasq .`
 - run it: `docker run -d --cap-add NET_ADMIN --env-file default.env --restart always --publish 53:53 --publish 53:53/udp  --name dnsmasq-1 dbarie/dnsmasq:latest -k -q --log-facility=-`
+- kill it: `docker kill dnsmasq-1`
+- remove it (if you want to run a new instance with the same name): `docker rm dnsmasq-1`
   
 
 # Secure SSH Login with second factor (TOTP) in addition to password
