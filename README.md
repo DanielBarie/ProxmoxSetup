@@ -308,6 +308,10 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
     - get it going: `./run-docker-gitlab.sh`
     - takes a while to start up
     - root (=admin) password may be found at `/srv/gitlab/config/inial_root_password` (see https://docs.gitlab.com/omnibus/installation/index.html#set-up-the-initial-password)
+    - Do some setup work:
+      - Restrict user sign-ups to local domain (dhge.de)
+      - Add Terms of use: Make it clear that anything stored here will be deleted on a regular basis.
+      - Disable statistics (Admin Area -> Settings -> Metrics and Profiling) to avoid running out of space.
   
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
