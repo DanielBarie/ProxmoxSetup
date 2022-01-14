@@ -269,6 +269,16 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
       ```
 - re-start container: `docker restart ipsec-vpn-server`
 
+# Gitlab Server for providing lab instructions
+- First, my idea was setting it up in a Linux Container. First ideas rarely work.
+  - According to https://about.gitlab.com/install/#debian
+  - Set up Linux Container with Debian base image in Proxmox (I've used v11).
+  - When installing the Gitlab package, I set `EXTERNAL_URL="http://versuchsanleitungen.labor"` 
+  - Loads of errors during installation related to permissions. 
+  - Me being me: I don't have the time to fix this. Let's try something else.
+ - There's a pre-packaged docker container ready for installation:
+  - 
+  
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
   - Test login functionality by opening another session!
