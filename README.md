@@ -327,6 +327,21 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
         ```
       - re-start container: `docker restart gitlab`
   
+# Docker Container running dnsmasq 
+This one is for our local DNS resolution so we may have a fake TLD (labor) and various hosts.
+Based on https://github.com/DrPsychick/docker-dnsmasq
+Trimmed DHCP functionality because we'll run a separate DHCP server. 
+- create a nice directory to work in 
+- get necessary file (lazy, don't clone repo): 
+  - `docker run --rm -it drpsychick/dnsmasq:latest --test`
+  - `docker run --rm -it drpsychick/dnsmasq:latest --export > default.env`
+  - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/healthcheck.sh`
+  - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/envreplace.sh`
+  - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/dnsmasq.conf.tmpl`
+  - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/Dockerfile`
+  - `docker build -t dbarie/dnsmasq .`
+  
+
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
   - Test login functionality by opening another session!
