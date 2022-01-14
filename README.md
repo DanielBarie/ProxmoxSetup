@@ -71,14 +71,15 @@ auto vmbr0
 # the outside world via NAT
 auto vmbr1
   iface vmbr1 inet static
-  address 172.16.254.254/16
+  # we'll take this entire private range and put the bridge at the highest address
+  address 172.16.31.254/12
   bridge-ports none
   bridge-stp off
   bridge-fd 0
   # activate kernel ip forwarding
   post-up echo 1 > /proc/sys/net/ipv4/ip_forward
   # nat all outgoing connections 
-  post-up iptables -t nat -A POSTROUTING -s '172.16.0.0/16' -o vmbr0 -j MASQUERADE
+  post-up iptables -t nat -A POSTROUTING -s '172.16.0.0/12' -o vmbr0 -j MASQUERADE
   # do NAT/Port Translation for incoming connecction to VMs
   # target ip/port (VM running GNS3) is 172.16.10.1:80
   # source is something coming in to vmbr0 on port 9001 proto tcp
