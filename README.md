@@ -282,6 +282,32 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
   - https://docs.gitlab.com/ee/install/docker.html
   - There already is a VM in Proxmox set up for running docker containers (dockerrunner, see above)
   - So let's give this a shot.
+  - Little hiccup when installing docker-compose (somehow the new(er) packages of docker were uninstalled, old ones were installed) was fixed by re-installing docker according to https://docs.docker.com/engine/install/debian/
+  - Decided that docker-compose was unnecessary.
+  - We'd rather do it traditionally. So we create a bash file for starting the container:
+    - `export GITLAB_HOME=/srv/gitlab`
+    - `mkdir /srv/gitlab`
+    - `nano run-docker-gitlab.sh` in some convenient place
+      - re-map ssh port from standard 22 to 2224 since there's other services running on the host using 22
+      - re-start container whenever it was stopped (don't want to do this manually just because the server rebooted when applying security updates)
+      - map directories to previously created location at `/srv/gitlab`
+      - increase (shm-size) space reserved for status information
+      ```
+       docker run --detach \
+          --hostname versuchsanleitungen.labor \
+          --publish 443:443 --publish 80:80 --publish 2224:22 \
+          --name gitlab \
+          --restart always \
+          --volume $GITLAB_HOME/config:/etc/gitlab \
+          --volume $GITLAB_HOME/logs:/var/log/gitlab \
+          --volume $GITLAB_HOME/data:/var/opt/gitlab \
+          --shm-size 256m \
+            gitlab/gitlab-ee:latest         
+         ```
+    - `chmod a+x run-docker-gitlab.sh`
+    - get it going: `./run-docker-gitlab.sh`
+    - takes a while to start up
+    - root (=admin) password may be found at `/srv/gitlab/config/inial_root_password` (see https://docs.gitlab.com/omnibus/installation/index.html#set-up-the-initial-password)
   
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
