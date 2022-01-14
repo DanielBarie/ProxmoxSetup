@@ -10,7 +10,7 @@ There are some base assumptions:
 - Max. number of concurrent students per lab session is approx. 25.
 
 And some constraints:
-- The server location is outside the lab.
+- The server location is outside the lab (physically and logically (see below)).
 - The server is located in a separate IP subnet with other servers.
 - Network access to various subnets from the student lab is impossible whereas the server may freely access these.
 - Network access to the outside world (i.e. the Internet) from the student lab is only possible via proxy whereas the server may freely access any internet location.
@@ -277,7 +277,9 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
   - Loads of errors during installation related to permissions. 
   - Me being me: I don't have the time to fix this. Let's try something else.
  - There's a pre-packaged docker container ready for installation:
-  - 
+  - https://docs.gitlab.com/ee/install/docker.html
+  - There already is a VM in Proxmox set up for running docker containers (dockerrunner, see above)
+  - So let's give this a shot.
   
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
