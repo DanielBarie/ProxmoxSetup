@@ -249,6 +249,10 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
   VPN_IPSEC_PSK=<lab psk>
   VPN_USER=<lab user>
   VPN_PASSWORD=<lab password>  
+  # private dns so we may access gitlab server etc...
+  VPN_DNS_SRV1=172.16.2.10
+  # backup dns if our (private) dns fails
+  VPN_DNS_SRV2=9.9.9.9
   ```
 - start container:
   ```
