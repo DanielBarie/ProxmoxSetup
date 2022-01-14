@@ -312,6 +312,20 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
       - Restrict user sign-ups to local domain (dhge.de)
       - Add Terms of use: Make it clear that anything stored here will be deleted on a regular basis.
       - Disable statistics (Admin Area -> Settings -> Metrics and Profiling) to avoid running out of space.
+    - set up email for notifications/sign-up confirmations: https://docs.gitlab.com/omnibus/settings/smtp.html
+      - the local exchange server is pretty stupid. So this is easy:
+      - `nano /srv/gitlab/config/gitlab.rb`
+        ```
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "<look up mx record>"
+        gitlab_rails['smtp_port'] = 25
+        gitlab_rails['smtp_domain'] = "<real domain>"
+        gitlab_rails['gitlab_email_enabled'] = true
+        gitlab_rails['gitlab_email_from'] = 'labor_rechnernetze_noreply@<real domain>'
+        gitlab_rails['gitlab_email_display_name'] = 'Gitlab Server Labor Rechnernetze'
+        gitlab_rails['gitlab_email_reply_to'] = '<maybe your mail address>'
+        ```
+      - re-start container: `docker restart gitlab`
   
 # Secure SSH Login with second factor (TOTP) in addition to password
   - LEAVE AN EXISTING SSH SESSION OPEN (so as not to lock out yourself)
