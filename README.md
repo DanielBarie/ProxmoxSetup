@@ -339,7 +339,8 @@ Trimmed DHCP functionality because we'll run a separate DHCP server.
   - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/envreplace.sh`
   - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/dnsmasq.conf.tmpl`
   - `wget https://raw.githubusercontent.com/DrPsychick/docker-dnsmasq/master/Dockerfile`
-  - `docker build -t dbarie/dnsmasq .`
+- `docker build -t dbarie/dnsmasq .`
+- run it: `docker run -d --cap-add NET_ADMIN --env-file default.env --restart always --publish 53:53 --publish 53:53/udp  --name dnsmasq-1 dbarie/dnsmasq:latest -k -q --log-facility=-`
   
 
 # Secure SSH Login with second factor (TOTP) in addition to password
