@@ -72,7 +72,11 @@ auto vmbr0
 auto vmbr1
   iface vmbr1 inet static
   # we'll take this entire private range and put the bridge at the highest address
-  address 172.16.31.254/12
+  # well, not quite. because wtf we'll be assigned an address from the upper end of the /12 range
+  # when dialling in via vpn.
+  # this is specific to my location.
+  # so take care...
+  address 172.16.31.254/13
   bridge-ports none
   bridge-stp off
   bridge-fd 0
