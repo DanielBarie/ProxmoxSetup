@@ -269,12 +269,18 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
   ```
 - We need to make some modifications to that baseline config to let the clients see our internal servers/VMs:
   - Take the entire 172.16.0.0/16 subnet as being private.
-    - get shell to change `run.sh` inside container:  `docker exec -it ipsec-vpn-server env TERM=xterm bash -l
+    - get shell to change `run.sh` inside container:  `docker exec -it ipsec-vpn-server env TERM=xterm bash -l`
       ``` 
       #virtual-private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/12,%v4:!$L2TP_NET,%v4:!$XAUTH_NET
       virtual-private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/16,%v4:!$L2TP_NET,%v4:!$XAUTH_NET 
       ```
 - re-start container: `docker restart ipsec-vpn-server`
+## Troubleshooting the VPN
+You may run into issues with Windows being unable to connect to the VPN server despite having set up forwarding of ports upd:500 and udp:4500 on the Proxmox host:
+- Check if packets arrive on the VM running the docker container: `tcpdump -i any port 500` and `tcpdump -i any port 4500`
+- If these show packets and there's no connection from Windows: https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md#windows-error-809
+- Or better: Switch to  IKEv2: https://github.com/hwdsl2/docker-ipsec-vpn-server#configure-and-use-ikev2-vpn
+
 
 # Gitlab Server for providing lab instructions
 - First, my idea was setting it up in a Linux Container. First ideas rarely work.
