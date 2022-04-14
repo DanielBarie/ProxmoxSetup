@@ -76,6 +76,7 @@ auto vmbr1
   # when dialling in via vpn.
   # this is specific to my location.
   # so take care...
+  # as an alternative: we may choose to nat private ip addresses coming into our server...
   address 172.16.31.254/13
   bridge-ports none
   bridge-stp off
