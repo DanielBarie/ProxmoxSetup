@@ -211,9 +211,9 @@ auto vmbr1
   ip upnp set enabled=no
   ip dns set servers=9.9.9.9,8.8.8.8
   ip address add address=172.16.0.1/16 interface=ether1
-  ip dhcp-server network add address=172.16.0.0/16 dns-server=9.9.9.9
-  ip dhcp-server network set gateway=172.16.254.254
-  ip route add gateway=172.16.254.254
+  ip dhcp-server network add address=172.16.0.0/13 dns-server=9.9.9.9
+  ip dhcp-server network set gateway=172.16.31.254
+  ip route add gateway=172.16.31.254
   ip pool add name=GNSVMPool range=172.16.10.1-172.16.10.250
   ip pool add name=KaliPool range=172.16.11.10-172.16.11.200
   ip pool add name=UtilServer range=172.16.2.10-172.16.2.200
