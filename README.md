@@ -161,6 +161,11 @@ auto vmbr1
   ```
   - Set locale `sudo dpkg-reconfigure locales`
   - To fix annoying keyboard: `sudo dpkg-reconfigure keyboard-configuration`, happily overriding previously set defaults. 
+  - install useful software: `sudo apt-get install mc nano`
+  - set user name / password for web ui in `~/.config/GNS3/<version number>/gns3_server.conf`:
+    - `auth = true`
+    - `user = <user name>`
+    - `password = <password>`
   - reboot: `sudo reboot`
   
   ### Orchestrate Multiple Instances of the GNS3 VM
