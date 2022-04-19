@@ -278,11 +278,11 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
     hwdsl2/ipsec-vpn-server
   ```
 - We need to make some modifications to that baseline config to let the clients see our internal servers/VMs:
-  - Take the entire 172.16.0.0/16 subnet as being private.
+  - Take only a part of 172.16.0.0/16 subnet as being private (because of VPN dial-in IPs, special to my place, you might have to adapt this).
     - get shell to change `run.sh` inside container:  `docker exec -it ipsec-vpn-server env TERM=xterm bash -l`
       ``` 
       #virtual-private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/12,%v4:!$L2TP_NET,%v4:!$XAUTH_NET
-      virtual-private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/16,%v4:!$L2TP_NET,%v4:!$XAUTH_NET 
+      virtual-private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/13,%v4:!$L2TP_NET,%v4:!$XAUTH_NET 
       ```
 - re-start container: `docker restart ipsec-vpn-server`
 ## Troubleshooting the VPN
@@ -450,10 +450,7 @@ Get some real guests going
 - The Ubuntu template supplied with the GUI is an old one (v18 LTS). To use a newer one: https://www.gns3.com/marketplace/appliances/ubuntu-cloud-guest
 - Be patient when logging in with ubuntu/ubuntu. It will take a while to complete the cloud init for setting username/password.
                                                 
-                                                
-                                                
-                                       
-
-                                                
-                                                
+           
+# ToDo:  
+- Give each student a private net (i.e. isolate/firewall VM instances)
                                                 
