@@ -198,12 +198,24 @@ auto vmbr1
 ## Setting up Ubuntu VM with GNS3 
   - This actually is the preferred way.
   - We'll work around the authentication issues and stuff
-  - Run a VM installation with an Ubuntu image (e.g. 20.04 LTS), chose minimal install.
+  - Run a VM installation with an Ubuntu image (e.g. 20.04 LTS)
+    - Choose minimal install.
+    - Add an admin user
+    - Later, add student user 
   - Add Wireshark: `sudo apt-get install wireshark`, make sure you let normal users do packet captures.
   - Add GNS3 as per https://docs.gns3.com/docs/getting-started/installation/linux/
     - Choose to run appliances locally
     - No need to remove docker packages if you've chosen a minimal install.
-    - Add packages: `sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm`
+    - Add openssh: `sudo apt-get install openssh-server`
+    - Add packages for appliances: `sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm`
+    - Add student user to relevant groups:
+      ```
+      sudo usermod -aG ubridge student
+      sudo usermod -aG libvirt student
+      sudo usermod -aG kvm student
+      sudo usermod -aG wireshark student
+      sudo usermod -aG docker student  
+      ```
   
 ## Mikrotik CHR Setup
   - Get current image: `https://download.mikrotik.com/routeros/6.48.5/chr-6.48.5.img.zip`
