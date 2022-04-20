@@ -215,6 +215,7 @@ auto vmbr1
     - No need to remove docker packages if you've chosen a minimal install.
     - Add openssh: `sudo apt-get install openssh-server`
     - Add VNC viewer: `sudo apt-get install tigervnc-viewer`
+    - Allow remote VNC access: Einstellungen -> Freigabe -> Bildschirmfreigabe
     - Add packages for appliances: `sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm`
     - Add student user to relevant groups:
       ```
