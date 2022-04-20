@@ -229,6 +229,22 @@ auto vmbr1
       sudo usermod -aG wireshark student
       sudo usermod -aG docker student  
       ```
+## Setting up Debian 11.3 VM
+- Since Ubuntu 20.04 wouldn't really work for us...
+  - Trouble using X11 before login
+- Set up VM
+  - Set CPU type to host
+  - Set QEMU Guest Agent checkbox 
+- Install Debian
+  - SSH Server
+  - Xfce
+  - Gnome
+  - Gnome Flashback (easier on resources when using VNC)
+  - No need to install guest extensions, will be detected automatically.
+ - Add useful stuff
+  - `sudo apt-get install mc nano`
+- Follow intructions on https://docs.gns3.com/docs/getting-started/installation/linux/ for GNS3 installation
+  - This is a bit more of a pain than with Ubuntu...
   
   
 ## Mikrotik CHR Setup
