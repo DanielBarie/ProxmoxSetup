@@ -242,7 +242,7 @@ auto vmbr1
   - Gnome Flashback (easier on resources when using VNC)
   - No need to install guest extensions, will be detected automatically.
  - Add useful stuff
-  - `sudo apt-get install mc nano`
+  - `sudo apt-get install mc nano net-tools`
 - Follow intructions on https://docs.gns3.com/docs/getting-started/installation/linux/ for GNS3 installation
   - This is a bit more of a pain than with Ubuntu...
   
