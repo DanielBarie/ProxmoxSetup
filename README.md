@@ -202,6 +202,11 @@ auto vmbr1
     - Choose minimal install.
     - Add an admin user
     - Later, add student user 
+  - Add Guest Extensions:
+    ```
+    sudo apt-get install qemu-guest-agent
+    sudo systemctl start qemu-guest-agent
+    ```
   - Add Wireshark: `sudo apt-get install wireshark`, make sure you let normal users do packet captures.
   - Add GNS3 as per https://docs.gns3.com/docs/getting-started/installation/linux/
     - Choose to run appliances locally
@@ -217,6 +222,7 @@ auto vmbr1
       sudo usermod -aG wireshark student
       sudo usermod -aG docker student  
       ```
+  
   
 ## Mikrotik CHR Setup
   - Get current image: `https://download.mikrotik.com/routeros/6.48.5/chr-6.48.5.img.zip`
