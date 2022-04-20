@@ -245,6 +245,14 @@ auto vmbr1
   - `sudo apt-get install mc nano net-tools`
 - Follow intructions on https://docs.gns3.com/docs/getting-started/installation/linux/ for GNS3 installation
   - This is a bit more of a pain than with Ubuntu...
+- Add VNC Access:
+  - `apt-get update && apt-get install -y x11vnc`
+  - `x11vnc -storepasswd /etc/x11vnc.passwd`
+  - `chmod 0400 /etc/x11vnc.passwd`
+  - f*ck wayland:
+    - `nano /etc/gdm3/daemon.conf`
+      - uncomment `#WaylandEnable=false`
+  
   
   
 ## Mikrotik CHR Setup
