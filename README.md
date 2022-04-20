@@ -209,6 +209,9 @@ auto vmbr1
     ```
   - Add useful programs:
     ```sudo apt-get install mc nano```
+  - Deactivate VNC Encryption. If not, lots of clients will not work. https://wiki.ubuntuusers.de/VNC/#Authentifizierungsproblem-vino-server
+    - `sudo apt-get install dconf-editor`
+    - Start dconf-editor, go to "org.gnome.desktop.remote-access" deactivate key "require-encryption"
   - Add Wireshark: `sudo apt-get install wireshark`, make sure you let normal users do packet captures.
   - Add GNS3 as per https://docs.gns3.com/docs/getting-started/installation/linux/
     - Choose to run appliances locally
