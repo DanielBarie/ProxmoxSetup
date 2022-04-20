@@ -235,6 +235,7 @@ auto vmbr1
 - Set up VM
   - Set CPU type to host
   - Set QEMU Guest Agent checkbox 
+  - attach to vmbr1
 - Install Debian
   - SSH Server
   - Xfce
@@ -249,6 +250,24 @@ auto vmbr1
   - `apt-get update && apt-get install -y x11vnc`
   - `x11vnc -storepasswd /etc/x11vnc.passwd`
   - `chmod 0400 /etc/x11vnc.passwd`
+  - `nano /lib/systemd/system/x11vnc.service`
+    ```
+    [Unit]
+    Description=Start x11vnc
+    After=multi-user.target
+
+    [Service]
+    Type=simple
+    ExecStart=/usr/bin/x11vnc -display :0 -auth guess -forever -loop -noxdamage -repeat -rfbauth /etc/x11vnc.passwd -rfbport 5900 -shared
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
+  - enable:
+    ```
+    systemctl enable x11vnc.service
+    systemctl start x11vnc.service
+    ```
   - f*ck wayland:
     - `nano /etc/gdm3/daemon.conf`
       - uncomment `#WaylandEnable=false`
