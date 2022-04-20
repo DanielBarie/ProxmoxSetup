@@ -141,6 +141,7 @@ auto vmbr1
 # Fun with VMs
 ## The GNS3 VM
   - GNS3 provides a KVM image, this is what Proxmox is made for: https://github.com/GNS3/gns3-gui/releases
+  - This will give us a Web-UI included with the VM or a way of connecting to the VM via the Windows GUI.
   - Create a nice place to store original images for VMs: `zfs create storage-hdd/originale`
   - Download this to some nice place: `wget https://github.com/GNS3/gns3-gui/releases/download/v2.2.26/GNS3.VM.KVM.2.2.26.zip`
   - Unzip, you'll end up with three files: Two qcow2 disk images and a bash script.
@@ -184,15 +185,25 @@ auto vmbr1
 - Set a known MAC: `qm set <ID> -net0 virtio=xx:xx:xx:xx:xx:xx,bridge=vmbr1`
   
  
-## Made a mistake setting the boot order?
+### Made a mistake setting the boot order?
   - For whatever reason you'll end up being unable to shut down the VM (stuck in PXE)
   - `fuser /var/lock/qemu-server/lock-<VM number>.conf`
   - `kill <PID holding the lock>`
   - `qm stop <VM ID>`
   
-## Can't connect to a remote instance of GNS3 
+### Can't connect to a remote instance of GNS3 
 - Check if there's a version mismatch between GUI/Controller and the remote VM. The error message is really, really well hidden. Guys, can't you make this a pop up? 
  ![Screenshot with small error message top right](https://github.com/DanielBarie/ProxmoxSetup/blob/main/gns_version_mismatch.png "Error Message") 
+
+## Setting up Ubuntu VM with GNS3 
+  - This actually is the preferred way.
+  - We'll work around the authentication issues and stuff
+  - Run a VM installation with an Ubuntu image (e.g. 20.04 LTS), chose minimal install.
+  - Add Wireshark: `sudo apt-get install wireshark`, make sure you let normal users do packet captures.
+  - Add GNS3 as per https://docs.gns3.com/docs/getting-started/installation/linux/
+    - Choose to run appliances locally
+    - No need to remove docker packages if you've chosen a minimal install.
+    - Add packages: `sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm`
   
 ## Mikrotik CHR Setup
   - Get current image: `https://download.mikrotik.com/routeros/6.48.5/chr-6.48.5.img.zip`
