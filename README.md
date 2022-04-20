@@ -196,6 +196,7 @@ auto vmbr1
  ![Screenshot with small error message top right](https://github.com/DanielBarie/ProxmoxSetup/blob/main/gns_version_mismatch.png "Error Message") 
 
 ## Setting up Ubuntu VM with GNS3 
+  - get the image, move it to `/var/lib/vz/template/iso/`
   - This actually is the preferred way.
   - We'll work around the authentication issues and stuff
   - Run a VM installation with an Ubuntu image (e.g. 20.04 LTS)
