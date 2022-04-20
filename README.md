@@ -219,7 +219,7 @@ auto vmbr1
     - No need to remove docker packages if you've chosen a minimal install.
     - Add openssh: `sudo apt-get install openssh-server`
     - Add VNC viewer for use with GNS3 appliances (e.g. webterm): `sudo apt-get install tigervnc-viewer`
-    - Allow remote VNC access: Einstellungen -> Freigabe -> Bildschirmfreigabe
+    - Allow remote VNC access: Einstellungen -> Freigabe -> Bildschirmfreigabe (anyway, won't work if user is not already logged in)
     - Add packages for appliances: `sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm`
     - Add student user to relevant groups:
       ```
@@ -229,6 +229,8 @@ auto vmbr1
       sudo usermod -aG wireshark student
       sudo usermod -aG docker student  
       ```
+    - Maybe try fixing VNC login via: https://askubuntu.com/questions/1244827/cant-acces-to-xauthority-for-x11vnc-ubuntu-20-04
+  
 ## Setting up Debian 11.3 VM
 - Since Ubuntu 20.04 wouldn't really work for us...
   - Trouble using X11 before login
@@ -246,7 +248,7 @@ auto vmbr1
   - `sudo apt-get install mc nano net-tools`
 - Follow intructions on https://docs.gns3.com/docs/getting-started/installation/linux/ for GNS3 installation
   - This is a bit more of a pain than with Ubuntu...
-- Add VNC Access:
+- Nice try, doesn't work, Add VNC Access:
   - `apt-get update && apt-get install -y x11vnc`
   - `x11vnc -storepasswd /etc/x11vnc.passwd`
   - `chmod 0400 /etc/x11vnc.passwd`
@@ -271,6 +273,15 @@ auto vmbr1
   - f*ck wayland:
     - `nano /etc/gdm3/daemon.conf`
       - uncomment `#WaylandEnable=false`
+  - still no login possible. need to switch to lightdm
+- VNC Access via lightdm: (adapted from https://askubuntu.com/questions/1033274/ubuntu-18-04-connect-to-login-screen-over-vnc/)
+  - `/usr/sbin/dpkg-reconfigure lightdm`
+  - will still not work because of authentication issues.
+- since we don't really want to share a screen but provide remote sessions, we might also install something else, that just provides a remote desktop session:
+  - `sudo apt-get install tigervnc-standalone-server`
+  - `sudo vncpasswd`
+  - check: `tigervncserver -localhost no -xstartup /usr/bin/xterm `
+  - 
   
   
   
