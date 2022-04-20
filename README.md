@@ -207,6 +207,8 @@ auto vmbr1
     sudo apt-get install qemu-guest-agent
     sudo systemctl start qemu-guest-agent
     ```
+  - Add useful programs:
+    ```sudo apt-get install mc nano```
   - Add Wireshark: `sudo apt-get install wireshark`, make sure you let normal users do packet captures.
   - Add GNS3 as per https://docs.gns3.com/docs/getting-started/installation/linux/
     - Choose to run appliances locally
