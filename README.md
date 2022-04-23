@@ -131,6 +131,13 @@ auto vmbr1
     sparse
     nodes VirtNWLab  
   ```
+- Create a directory for backup storage (needs to be directory):
+  - Create directory on zfs hdd pool
+    ```
+    zfs create storage-hdd/backup -o mountpoint=/storage-hdd/backup
+    ```
+  - Datacenter -> Storage -> Add -> Directory, name it (ID), enter /storage-hdd/backup as directory, add vzdump to contents
+  - That location may now be used via Datacenter -> Backup -> Add...
 - Fun Fact: The GUI will display the "full" VM disk size. If you need to check the real size:
   ```
   zfs list
