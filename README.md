@@ -351,6 +351,7 @@ These are generic non-Proxmox:
 
   
 # DockerRunner VM for running containers
+## VPN Server Container
 Since the virtualization host is most probably not in a firewalled lab 
 but accessible from within a larger part of the network we need some way of protecting the
 GNS3 VMs (or else...).
@@ -389,12 +390,15 @@ See https://github.com/hwdsl2/docker-ipsec-vpn-server for the container instruct
       virtual-private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/13,%v4:!$L2TP_NET,%v4:!$XAUTH_NET 
       ```
 - re-start container: `docker restart ipsec-vpn-server`
-## Troubleshooting the VPN
+### Troubleshooting the VPN
 You may run into issues with Windows being unable to connect to the VPN server despite having set up forwarding of ports upd:500 and udp:4500 on the Proxmox host:
 - Check if packets arrive on the VM running the docker container: `tcpdump -i any port 500` and `tcpdump -i any port 4500`
 - If these show packets and there's no connection from Windows: https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md#windows-error-809
 - Or better: Switch to  IKEv2: https://github.com/hwdsl2/docker-ipsec-vpn-server#configure-and-use-ikev2-vpn
-
+### Wishlist
+- IKEv2 for better handling of double NAT
+- Multiple user support with separate subnets for each
+  
 
 # Gitlab Server for providing lab instructions
 - First, my idea was setting it up in a Linux Container. First ideas rarely work.
