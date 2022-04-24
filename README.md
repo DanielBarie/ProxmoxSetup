@@ -187,9 +187,15 @@ auto vmbr1
   - Cloud Init for setting IP Adresses. Won't do that because we'd have to install the cloud init stuff on the GNS3 VM. (Can be done, no worries.)
   - Setting IP Adresses via DHCP. When cloning a VM, PVE will randomly assign a MAC address to the clone. So we need to fix that to be able to assign a certain IP to the instance via DHCP.
   
- We'll go for setting IPs via DHCP.
- #### Setting IPs via DHCP.
+ We'll go for setting IPs via DHCP. Just because I haven't had the time yet to implement cloud init.
+#### Setting IPs via DHCP.
 - Set a known MAC: `qm set <ID> -net0 virtio=xx:xx:xx:xx:xx:xx,bridge=vmbr1`
+#### Cloud Init
+- What a wonderful idea to be implemented featuring:
+  - Individual account settings (username/password) for each VM
+  - IP address setting for each VM
+  - Generation of ssh keys for each VM
+  - Setting locale and keyboard (maybe already set in the template that was used for cloning)
   
  
 ### Made a mistake setting the boot order?
