@@ -230,6 +230,7 @@ auto vmbr1
   - Add GNS3 as per https://docs.gns3.com/docs/getting-started/installation/linux/
     - Choose to run appliances locally
     - No need to remove docker packages if you've chosen a minimal install.
+    - Need to add (new) docker repo and install from it, though.
     - Add openssh: `sudo apt-get install openssh-server`
     - Add VNC viewer for use with GNS3 appliances (e.g. webterm): `sudo apt-get install tigervnc-viewer`
     - Allow remote VNC access: Einstellungen -> Freigabe -> Bildschirmfreigabe (anyway, won't work if user is not already logged in)
