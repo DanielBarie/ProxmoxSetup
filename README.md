@@ -243,6 +243,8 @@ auto vmbr1
       sudo usermod -aG wireshark student
       sudo usermod -aG docker student  
       ```
+    - Install xrdp: `sudo apt-get install xrdp`, reduce bpp in /etc/xrdp.ini
+    - Activate auto-sign-in for student user (because of vnc issues).
     - Maybe try fixing VNC login via: https://askubuntu.com/questions/1244827/cant-acces-to-xauthority-for-x11vnc-ubuntu-20-04
   
 ## Setting up Debian 11.3 VM
