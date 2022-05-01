@@ -223,6 +223,7 @@ auto vmbr1
     ```
   - Add useful programs:
     ```sudo apt-get install mc nano```
+  - Add VNC Server: `sudo apt-get install vino`
   - Deactivate VNC Encryption. If not, lots of clients will not work. https://wiki.ubuntuusers.de/VNC/#Authentifizierungsproblem-vino-server
     - `sudo apt-get install dconf-editor`
     - Start dconf-editor, go to "org.gnome.desktop.remote-access" deactivate key "require-encryption"
