@@ -212,6 +212,21 @@ auto vmbr1
   - get the image, move it to `/var/lib/vz/template/iso/`
   - This actually is the preferred way.
   - We'll work around the authentication issues and stuff
+  - Configure VM:
+    - System: 
+      - Set QEMU Guest Agent checkbox 
+    - Disk:
+      - Create a disk (32GB should do)
+      - Set storage location to ssd-storage-vmdata pool
+      - Do you need a backup? 
+    - CPU
+      - Set CPU type to host
+      - Let it have 2 cores
+    - Memory:
+      - 4 GB
+    - Network
+      - Attach to vmbr1
+      - Uncheck Firewall
   - Run a VM installation with an Ubuntu image (e.g. 20.04 LTS)
     - Choose minimal install.
     - Add an admin user
