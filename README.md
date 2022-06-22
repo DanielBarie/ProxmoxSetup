@@ -196,6 +196,7 @@ auto vmbr1
   - IP address setting for each VM
   - Generation of ssh keys for each VM
   - Setting locale and keyboard (maybe already set in the template that was used for cloning)
+- See below for using it with a complete Ubuntu VM.
   
  
 ### Made a mistake setting the boot order?
@@ -263,8 +264,11 @@ auto vmbr1
     - Activate auto-sign-in for student user (because of vnc issues).
     - Maybe try fixing VNC login via: https://askubuntu.com/questions/1244827/cant-acces-to-xauthority-for-x11vnc-ubuntu-20-04
   - Cloud init?
+    - Doc: https://pve.proxmox.com/wiki/Cloud-Init_FAQ
     - In the VM: `sudo apt-get install cloud-init`
-## Setting up Debian 11.3 VM
+    - Hardware Tab of the VM: Add Cloud Init Drive. ![Screenshot for adding Cloud Init Drive](https://github.com/DanielBarie/ProxmoxSetup/blob/main/pve_add_cloudinit_drive.png)
+
+  ## Setting up Debian 11.3 VM
 - Since Ubuntu 20.04 wouldn't really work for us...
   - Trouble using X11 before login
 - Set up VM
