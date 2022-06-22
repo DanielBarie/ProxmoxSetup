@@ -260,10 +260,27 @@ auto vmbr1
       sudo usermod -aG wireshark student
       sudo usermod -aG docker student  
       ```
-    - Install xrdp: `sudo apt-get install xrdp`, reduce bpp in /etc/xrdp.ini
-    - If you insist on VNC: Activate auto-sign-in for student user (because of vnc issues).
-    - Maybe try fixing VNC login via: https://askubuntu.com/questions/1244827/cant-acces-to-xauthority-for-x11vnc-ubuntu-20-04
-    - Prevent Machine Shutdown by unprivileged student user:
+    - Install xrdp: `sudo apt-get install xrdp`
+      - Reduce bpp in /etc/xrdp.ini
+      - Set Auto-Terminate for abandoned/idle sessions, edit `/etc/xrdp/sesman.ini`:
+        ```
+        KillDisconnected=true
+  
+        ;; DisconnectedTimeLimit (seconds) - wait before kill disconnected sessions
+        ; Type: integer
+        ; Default: 0
+        ; if KillDisconnected is set to false, this value is ignored
+        DisconnectedTimeLimit=0
+
+        ;; IdleTimeLimit (seconds) - wait before disconnect idle sessions
+        ; Type: integer
+        ; Default: 0
+        ; Set to 0 to disable idle disconnection.
+        IdleTimeLimit=600
+        ```
+    - (If you insist on VNC: Activate auto-sign-in for student user (because of vnc issues).)
+    - (Maybe try fixing VNC login via: https://askubuntu.com/questions/1244827/cant-acces-to-xauthority-for-x11vnc-ubuntu-20-04)
+    - Prevent Machine Shutdown and Reboot by unprivileged student user:
       - Edit `/etc/polkit-1/localauthority/50-local.d/restrict-login-powermgmt.pkla`
       - Add content to above file:
         ```
