@@ -262,7 +262,8 @@ auto vmbr1
     - Install xrdp: `sudo apt-get install xrdp`, reduce bpp in /etc/xrdp.ini
     - Activate auto-sign-in for student user (because of vnc issues).
     - Maybe try fixing VNC login via: https://askubuntu.com/questions/1244827/cant-acces-to-xauthority-for-x11vnc-ubuntu-20-04
-  
+  - Cloud init?
+    - In the VM: `sudo apt-get install cloud-init`
 ## Setting up Debian 11.3 VM
 - Since Ubuntu 20.04 wouldn't really work for us...
   - Trouble using X11 before login
