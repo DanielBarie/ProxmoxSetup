@@ -266,7 +266,8 @@ auto vmbr1
   - Cloud init?
     - Doc: https://pve.proxmox.com/wiki/Cloud-Init_FAQ
     - In the VM: `sudo apt-get install cloud-init`
-    - Hardware Tab of the VM: Add Cloud Init Drive. ![Screenshot for adding Cloud Init Drive](https://github.com/DanielBarie/ProxmoxSetup/blob/main/pve_add_cloudinit_drive.png)
+    - Hardware Tab of the VM: Add Cloud Init Drive.   
+      ![Screenshot for adding Cloud Init Drive](https://github.com/DanielBarie/ProxmoxSetup/blob/main/pve_add_cloudinit_drive.png)
 
   ## Setting up Debian 11.3 VM
 - Since Ubuntu 20.04 wouldn't really work for us...
