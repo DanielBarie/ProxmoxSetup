@@ -261,8 +261,20 @@ auto vmbr1
       sudo usermod -aG docker student  
       ```
     - Install xrdp: `sudo apt-get install xrdp`, reduce bpp in /etc/xrdp.ini
-    - Activate auto-sign-in for student user (because of vnc issues).
+    - If you insist on VNC: Activate auto-sign-in for student user (because of vnc issues).
     - Maybe try fixing VNC login via: https://askubuntu.com/questions/1244827/cant-acces-to-xauthority-for-x11vnc-ubuntu-20-04
+    - Prevent Machine Shutdown by unprivileged student user:
+      - Edit `/etc/polkit-1/localauthority/50-local.d/restrict-login-powermgmt.pkla`
+      - Add content to above file:
+      ```
+      [Disable lightdm PowerMgmt]
+      Identity=unix-user:*
+      Action= org.freedesktop.login1.power-off;org.freedesktop.login1.power-off-multiple-sessions
+      ResultAny=no
+      ResultInactive=no
+      ResultActive=no 
+      ```
+      - Restart polkit: `sudo systemctl restart polkit`
   - Cloud init?
     - Doc: https://pve.proxmox.com/wiki/Cloud-Init_FAQ
     - In the VM: `sudo apt-get install cloud-init`
