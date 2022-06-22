@@ -239,10 +239,10 @@ auto vmbr1
     ```
   - Add useful programs:
     ```sudo apt-get install mc nano```
-  - Add VNC Server: `sudo apt-get install vino`
-  - Deactivate VNC Encryption. If not, lots of clients will not work. https://wiki.ubuntuusers.de/VNC/#Authentifizierungsproblem-vino-server
+  - (Add VNC Server: `sudo apt-get install vino`)
+  - (Deactivate VNC Encryption. If not, lots of clients will not work. https://wiki.ubuntuusers.de/VNC/#Authentifizierungsproblem-vino-server
     - `sudo apt-get install dconf-editor`
-    - Start dconf-editor, go to "org.gnome.desktop.remote-access" deactivate key "require-encryption"
+    - Start dconf-editor, go to "org.gnome.desktop.remote-access" deactivate key "require-encryption")
   - Add Wireshark: `sudo apt-get install wireshark`, make sure you let normal users do packet captures.
   - Add GNS3 as per https://docs.gns3.com/docs/getting-started/installation/linux/
     - Choose to run appliances locally
@@ -297,7 +297,25 @@ auto vmbr1
         ResultInactive=no
         ResultActive=no  
         ```
-      - Restart polkit: `sudo systemctl restart polkit`
+    - Get rid of that stupid color profile authorization warning:
+      - create file `sudo touch /etc/polkit-1/localauthority/50-local.d/52-allow-color-manager-create-device.pkla`
+      - nano that file, content:
+        ```
+        [Allow Color Device]
+        Identity=unix-user:*
+        Action=org.freedesktop.color-manager.settings.modify.system;org.freedesktop.color-manager.create-device
+        ResultAny=no
+        ResultInactive=no
+        ResultActive=yes
+
+        [Allow Color Profile]
+        Identity=unix-user:*
+        Action=org.freedesktop.color-manager.settings.modify.system;org.freedesktop.color-manager.create-profile
+        ResultAny=no
+        ResultInactive=no
+        ResultActive=yes
+        ```
+    - Restart polkit: `sudo systemctl restart polkit`
   - Cloud init?
     - Doc: https://pve.proxmox.com/wiki/Cloud-Init_FAQ
     - In the VM: `sudo apt-get install cloud-init`
