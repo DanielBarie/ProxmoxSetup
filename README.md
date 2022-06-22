@@ -266,14 +266,20 @@ auto vmbr1
     - Prevent Machine Shutdown by unprivileged student user:
       - Edit `/etc/polkit-1/localauthority/50-local.d/restrict-login-powermgmt.pkla`
       - Add content to above file:
-      ```
-      [Disable lightdm PowerMgmt]
-      Identity=unix-user:*
-      Action= org.freedesktop.login1.power-off;org.freedesktop.login1.power-off-multiple-sessions
-      ResultAny=no
-      ResultInactive=no
-      ResultActive=no 
-      ```
+        ```
+        [Disable lightdm PowerMgmt]
+        Identity=unix-user:*
+        Action= org.freedesktop.login1.power-off;org.freedesktop.login1.power-off-multiple-sessions
+        ResultAny=no
+        ResultInactive=no
+        ResultActive=no 
+        [Disable lightdm reboot]
+        Identity=unix-user:*
+        Action= org.freedesktop.login1.reboot;org.freedesktop.login1.reboot-multiple-sessions
+        ResultAny=no
+        ResultInactive=no
+        ResultActive=no  
+        ```
       - Restart polkit: `sudo systemctl restart polkit`
   - Cloud init?
     - Doc: https://pve.proxmox.com/wiki/Cloud-Init_FAQ
