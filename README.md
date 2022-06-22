@@ -268,6 +268,10 @@ auto vmbr1
     - In the VM: `sudo apt-get install cloud-init`
     - Hardware Tab of the VM: Add Cloud Init Drive.   
       ![Screenshot for adding Cloud Init Drive](https://github.com/DanielBarie/ProxmoxSetup/blob/main/pve_add_cloudinit_drive.png)
+  - Whatever way of setup was chosen (Cloud Init or not): 
+    - Convert the VM to template. 
+    - Clone it (linked clone!)
+    - Use the clones and set individual network parameters: `qm set <id of clone> --ipconfig0 ip=172.16.12.xx/23,gw=172.16.31.254`
 
   ## Setting up Debian 11.3 VM
 - Since Ubuntu 20.04 wouldn't really work for us...
