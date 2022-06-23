@@ -278,7 +278,7 @@ auto vmbr1
         ; Set to 0 to disable idle disconnection.
         IdleTimeLimit=600
         ```
-    - (If you insist on VNC: Activate auto-sign-in for student user (because of vnc issues).)
+    - (If you insist on VNC: Activate auto-sign-in for student user (because of vnc issues). Beware: This will break xrdp access. )
     - (Maybe try fixing VNC login via: https://askubuntu.com/questions/1244827/cant-acces-to-xauthority-for-x11vnc-ubuntu-20-04)
     - Prevent Machine Shutdown and Reboot by unprivileged student user:
       - Edit `/etc/polkit-1/localauthority/50-local.d/restrict-login-powermgmt.pkla`
@@ -326,7 +326,7 @@ auto vmbr1
     - Clone it (linked clone!)
     - Use the clones and set individual network parameters: `qm set <id of clone> --ipconfig0 ip=172.16.12.xx/23,gw=172.16.31.254`
 
-  ## Setting up Debian 11.3 VM
+  ## Setting up Debian 11.3 VM (WIP)
 - Since Ubuntu 20.04 wouldn't really work for us...
   - Trouble using X11 before login
 - Set up VM
