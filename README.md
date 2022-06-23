@@ -324,7 +324,9 @@ auto vmbr1
   - Whatever way of setup was chosen (Cloud Init or not): 
     - Convert the VM to template. 
     - Clone it (linked clone!)
-    - Use the clones and set individual network parameters: `qm set <id of clone> --ipconfig0 ip=172.16.12.xx/23,gw=172.16.31.254`
+    - Use the clones and set individual network parameters: 
+      - `qm set <id of clone> --ipconfig0 ip=172.16.12.xx/23,gw=172.16.31.254`
+      - Set individual host names.
 
   ## Setting up Debian 11.3 VM (WIP)
 - Since Ubuntu 20.04 wouldn't really work for us...
@@ -334,11 +336,13 @@ auto vmbr1
   - Set QEMU Guest Agent checkbox 
   - attach to vmbr1
 - Install Debian
-  - SSH Server
-  - Xfce
-  - Gnome
-  - Gnome Flashback (easier on resources when using VNC)
-  - No need to install guest extensions, will be detected automatically.
+  - add student user
+  - Packages:
+    - SSH Server
+    - Xfce
+    - Gnome
+    - Gnome Flashback (easier on resources when using VNC)
+    - No need to install guest extensions, will be detected automatically.
  - Add useful stuff
   - `sudo apt-get install mc nano net-tools`
 - Follow intructions on https://docs.gns3.com/docs/getting-started/installation/linux/ for GNS3 installation
