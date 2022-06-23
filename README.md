@@ -336,6 +336,7 @@ auto vmbr1
   - Set QEMU Guest Agent checkbox 
   - attach to vmbr1
 - Install Debian
+  - Go for expert install (whether graphical or not...): granular control over packages.
   - add student user
   - Packages:
     - SSH Server
