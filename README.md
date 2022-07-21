@@ -482,6 +482,17 @@ You may run into issues with Windows being unable to connect to the VPN server d
 - Check if packets arrive on the VM running the docker container: `tcpdump -i any port 500` and `tcpdump -i any port 4500`
 - If these show packets and there's no connection from Windows: https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md#windows-error-809
 - Or better: Switch to  IKEv2: https://github.com/hwdsl2/docker-ipsec-vpn-server#configure-and-use-ikev2-vpn
+  - Change Server Address: 
+    - get shell inside container: `docker exec -it ipsec-vpn-server env TERM=xterm bash -l`
+    - get helper script: `wget https://get.vpnsetup.net/ikev2 -O /opt/src/ikev2.sh`
+    - getting helper script doesn't work because of name resolution issues: add another DNS to `/etc/resolv.conf`:
+      - `vi /etc/resolv.conf` (no nano installed, no apk for installing it without DNS...)
+      - `a`, insert new line for new name server
+      - `ESC`,`:wq`
+      - while we're at it: `apk nano`
+    - make helper script executable: `chmod a+x ikev2.sh`
+    - run it: `./ikev2.sh`, change to _private_ ip of the server running the VMs (PVE). (Port forwarding for VPN to the VM running the docker container needs to be implemented as per above).
+      
 ### Wishlist
 - IKEv2 for better handling of double NAT
 - Multiple user support with separate subnets for each
