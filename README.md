@@ -482,6 +482,7 @@ You may run into issues with Windows being unable to connect to the VPN server d
 - Check if packets arrive on the VM running the docker container: `tcpdump -i any port 500` and `tcpdump -i any port 4500`
 - If these show packets and there's no connection from Windows: https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md#windows-error-809
 - Or better: Switch to  IKEv2: https://github.com/hwdsl2/docker-ipsec-vpn-server#configure-and-use-ikev2-vpn
+  - Downside: Needs Admin Elevation on Windows for certificate import (but so does fixing the double NAT issue for the traditional VPN).
   - Change Server Address: 
     - get shell inside container: `docker exec -it ipsec-vpn-server env TERM=xterm bash -l`
     - get helper script: `wget https://get.vpnsetup.net/ikev2 -O /opt/src/ikev2.sh`
