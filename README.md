@@ -497,7 +497,12 @@ You may run into issues with Windows being unable to connect to the VPN server d
 ### Wishlist
 - IKEv2 for better handling of double NAT (works if required, see above).
 - Bind mount of env file (no need to re-create the container after changing it)
-- Use dockerfile to include nano in the image.
+- Use Dockerfile to build it ourselves:
+  - include nano
+  - change run.sh:
+    - set public IP to our (very specific) private IP of the server running PVE (change `public_ip=${VPN_PUBLIC_IP:-''}`, not just if auo discovery fails)
+    - change also needs to be made to ikev2setup.sh
+    - change `virtual-private` according to our needs  
 - Multiple user support with separate subnets for each
   
 
