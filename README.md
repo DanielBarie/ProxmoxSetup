@@ -495,7 +495,9 @@ You may run into issues with Windows being unable to connect to the VPN server d
     - run it: `./ikev2.sh`, change to _private_ ip of the server running the VMs (PVE). (Port forwarding for VPN to the VM running the docker container needs to be implemented as per above).
       
 ### Wishlist
-- IKEv2 for better handling of double NAT
+- IKEv2 for better handling of double NAT (works if required, see above).
+- Bind mount of env file (no need to re-create the container after changing it)
+- Use dockerfile to include nano in the image.
 - Multiple user support with separate subnets for each
   
 
