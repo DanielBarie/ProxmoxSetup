@@ -316,6 +316,29 @@ auto vmbr1
         ResultActive=yes
         ```
     - Restart polkit: `sudo systemctl restart polkit`
+    - No Login via RDP? (Stuck after xrdp green login screen without any error message)
+      - `netstat -tlnp`, does xrdp listen on port 3389?
+      - probably only on tcp6 3389? I have no words for this... 
+        ```
+        (Es konnten nicht alle Prozesse identifiziert werden; Informationen über
+        nicht-eigene Processe werden nicht angezeigt; Root kann sie anzeigen.)
+        Aktive Internetverbindungen (Nur Server)
+        Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+        tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      -
+        tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+        tcp        0      0 192.168.122.1:53        0.0.0.0:*               LISTEN      -
+        tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      -
+        tcp6       0      0 ::1:631                 :::*                    LISTEN      -
+        tcp6       0      0 :::22                   :::*                    LISTEN      -
+        tcp6       0      0 :::3389                 :::*                    LISTEN      -
+        tcp6       0      0 ::1:3350                :::*                    LISTEN      -
+        ```
+      - change `/etc/xrdp/xrdp.ini`
+        ```
+        ;port 3390
+        ;need to change this to be
+        port=tcp://:3389
+        ```
   - Cloud init?
     - Doc: https://pve.proxmox.com/wiki/Cloud-Init_FAQ
     - In the VM: `sudo apt-get install cloud-init`
