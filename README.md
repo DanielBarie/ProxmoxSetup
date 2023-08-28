@@ -351,6 +351,27 @@ auto vmbr1
       - `qm set <id of clone> --ipconfig0 ip=172.16.12.xx/23,gw=172.16.31.254`
       - Set individual host names.
 
+## Setting up Debian 12
+Downside: No simultaneous sessions local/RDP for same user. Must log out locally to access via RDP.
+There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need remote access anyway (serving VMs).
+- Set up VM
+  - Set CPU type to host
+  - Set QEMU Guest Agent checkbox 
+  - attach to vmbr1
+- Install Debian
+  - Go for expert install (whether graphical or not...): granular control over packages.
+  - add student user
+  - Packages:
+    - openssh-server
+    - Xfce
+  - Add useful stuff
+    - `sudo apt-get install mc nano net-tools`
+  - Add RDP
+    - `sudo apt-get install xrdp`
+  - Install GNS3: (need to modify qemu package name)
+    - `sudo apt install -y python3-pip python3-pyqt5 python3-pyqt5.qtsvg python3-pyqt5.qtwebsockets qemu-system-x86 qemu-kvm qemu-utils libvirt-clients libvirt-daemon-system virtinst wireshark xtightvncviewer apt-transport-https ca-certificates curl gnupg2 software-properties-common`
+    - 
+
   ## Setting up Debian 11.3 VM (WIP)
 - Since Ubuntu 20.04 wouldn't really work for us...
   - Trouble using X11 before login
