@@ -443,7 +443,8 @@ I'm not quite sure why one should insist on using debian. The setup just sucks (
     - Start Menu -> Education -> GNS3
     - Disable update checks: (please don't update during our labs)
       - Edit -> Preferences -> General -> Miscellaneous (remove checkmark)
-  - 
+    - Set VPCS path:
+      - Edit -> Preferences -> VPCS -> path to compiled executable (i.e. ~/vpcs-0.6.1/src/vpcs)
 
 
   
