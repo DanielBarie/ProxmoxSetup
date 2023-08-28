@@ -415,6 +415,12 @@ There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need re
     - `make`
     - `sudo su` (to get the path right (/usr/sbin))`
     - `make install`
+  - Add student user to groups
+    - `su`
+    - `sudo su`
+    - `usermod -aG libvirt student`
+    - `usermod -aG kvm student`
+    - `usermod -aG wireshark student`  
   - Start / prepare GNS3
     - Start Menu -> Education -> GNS3
     - Disable update checks: (please don't update during our labs)
