@@ -375,6 +375,8 @@ There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need re
         - uncomment `Unattended-Upgrade::Automatic-Reboot "false";` and set to true
         - uncomment `Unattended-Upgrade::Automatic-Reboot-WithUsers "true";`
         - uncomment `Unattended-Upgrade::Automatic-Reboot-Time "02:00";`
+      - restart: `systemctl restart unattended-upgrades`
+      - check for config errors: `journalctl -u unattended-upgrades -xn`
   - Add RDP
     - `apt-get install xrdp`
   - Install GNS3: (need to modify qemu package name, https://www.gns3.com/community/featured/how-install-gns3-on-debian-12-bookworm)
