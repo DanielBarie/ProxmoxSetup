@@ -364,6 +364,8 @@ There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need re
   - Packages:
     - openssh-server
     - Xfce
+    - bridge-utils
+    - cpu-checker
   - Add useful stuff
     - get root (`su`) 
     - `apt-get install mc nano net-tools`
@@ -379,7 +381,25 @@ There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need re
       - check for config errors: `journalctl -u unattended-upgrades -xn`
       - make it automatic:
         - `/usr/sbin/dpkg-reconfigure -plow unattended-upgrades`, say yes
-        - 
+  - Do that polkit stuff for color profile device
+    - create file `sudo touch /etc/polkit-1/localauthority/50-local.d/52-allow-color-manager-create-device.pkla`
+    - nano that file, content:
+      ```
+      [Allow Color Device]
+      Identity=unix-user:*
+      Action=org.freedesktop.color-manager.settings.modify.system;org.freedesktop.color-manager.create-device
+      ResultAny=no
+      ResultInactive=no
+      ResultActive=yes
+
+      [Allow Color Profile]
+      Identity=unix-user:*
+      Action=org.freedesktop.color-manager.settings.modify.system;org.freedesktop.color-manager.create-profile
+      ResultAny=no
+      ResultInactive=no
+      ResultActive=yes
+      ```
+    - Restart polkit: `sudo systemctl restart polkit`
   - Add RDP
     - `apt-get install xrdp`
   - Install GNS3: (need to modify qemu package name, https://www.gns3.com/community/featured/how-install-gns3-on-debian-12-bookworm)
