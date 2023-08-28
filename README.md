@@ -368,6 +368,13 @@ There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need re
     - get root (`su`) 
     - `apt-get install mc nano net-tools`
   - enable automatic security updates
+    - get root
+    - `apt-get install unattended-upgrades`
+    - enable automatic reboot at night if required (do it. do it.)
+      - edit /etc/apt/apt.conf.d/50unattended-upgrades:
+        - uncomment `Unattended-Upgrade::Automatic-Reboot "false";` and set to true
+        - uncomment `Unattended-Upgrade::Automatic-Reboot-WithUsers "true";`
+        - uncomment `Unattended-Upgrade::Automatic-Reboot-Time "02:00";`
   - Add RDP
     - `apt-get install xrdp`
   - Install GNS3: (need to modify qemu package name, https://www.gns3.com/community/featured/how-install-gns3-on-debian-12-bookworm)
