@@ -368,7 +368,7 @@ There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need re
     - `sudo apt-get install mc nano net-tools`
   - Add RDP
     - `sudo apt-get install xrdp`
-  - Install GNS3: (need to modify qemu package name)
+  - Install GNS3: (need to modify qemu package name, https://www.gns3.com/community/featured/how-install-gns3-on-debian-12-bookworm)
     - `sudo apt install -y python3-pip python3-pyqt5 python3-pyqt5.qtsvg python3-pyqt5.qtwebsockets qemu-system-x86 qemu-kvm qemu-utils libvirt-clients libvirt-daemon-system virtinst wireshark xtightvncviewer apt-transport-https ca-certificates curl gnupg2 software-properties-common`
     - 
 
