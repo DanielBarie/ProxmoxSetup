@@ -365,69 +365,16 @@ There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need re
     - openssh-server
     - Xfce
   - Add useful stuff
-    - `sudo apt-get install mc nano net-tools`
+    - get root (`su`) 
+    - `apt-get install mc nano net-tools`
   - Add RDP
-    - `sudo apt-get install xrdp`
+    - `apt-get install xrdp`
   - Install GNS3: (need to modify qemu package name, https://www.gns3.com/community/featured/how-install-gns3-on-debian-12-bookworm)
     - `sudo apt install -y python3-pip python3-pyqt5 python3-pyqt5.qtsvg python3-pyqt5.qtwebsockets qemu-system-x86 qemu-kvm qemu-utils libvirt-clients libvirt-daemon-system virtinst wireshark xtightvncviewer apt-transport-https ca-certificates curl gnupg2 software-properties-common`
-    - 
+    - get (if not yet) root: `su`
+    - This is a highly specific VM, we take care our broken packages ourselves, no virtual environment, please: `pip3 install gns3-server  gns3-gui --break-system-packages`
 
-  ## Setting up Debian 11.3 VM (WIP)
-- Since Ubuntu 20.04 wouldn't really work for us...
-  - Trouble using X11 before login
-- Set up VM
-  - Set CPU type to host
-  - Set QEMU Guest Agent checkbox 
-  - attach to vmbr1
-- Install Debian
-  - Go for expert install (whether graphical or not...): granular control over packages.
-  - add student user
-  - Packages:
-    - SSH Server
-    - Xfce
-    - Gnome
-    - Gnome Flashback (easier on resources when using VNC)
-    - No need to install guest extensions, will be detected automatically.
- - Add useful stuff
-  - `sudo apt-get install mc nano net-tools`
-- Follow intructions on https://docs.gns3.com/docs/getting-started/installation/linux/ for GNS3 installation
-  - This is a bit more of a pain than with Ubuntu...
-- Nice try, doesn't work, Add VNC Access:
-  - `apt-get update && apt-get install -y x11vnc`
-  - `x11vnc -storepasswd /etc/x11vnc.passwd`
-  - `chmod 0400 /etc/x11vnc.passwd`
-  - `nano /lib/systemd/system/x11vnc.service`
-    ```
-    [Unit]
-    Description=Start x11vnc
-    After=multi-user.target
 
-    [Service]
-    Type=simple
-    ExecStart=/usr/bin/x11vnc -display :0 -auth guess -forever -loop -noxdamage -repeat -rfbauth /etc/x11vnc.passwd -rfbport 5900 -shared
-
-    [Install]
-    WantedBy=multi-user.target
-    ```
-  - enable:
-    ```
-    systemctl enable x11vnc.service
-    systemctl start x11vnc.service
-    ```
-  - f*ck wayland:
-    - `nano /etc/gdm3/daemon.conf`
-      - uncomment `#WaylandEnable=false`
-  - still no login possible. need to switch to lightdm
-- VNC Access via lightdm: (adapted from https://askubuntu.com/questions/1033274/ubuntu-18-04-connect-to-login-screen-over-vnc/)
-  - `/usr/sbin/dpkg-reconfigure lightdm`
-  - will still not work because of authentication issues.
-- since we don't really want to share a screen but provide remote sessions, we might also install something else, that just provides a remote desktop session:
-  - `sudo apt-get install tigervnc-standalone-server`
-  - `sudo vncpasswd`
-  - check: `tigervncserver -localhost no -xstartup /usr/bin/xterm `
-  - 
-  
-  
   
 ## Mikrotik CHR Setup
   - Get current image: `https://download.mikrotik.com/routeros/6.48.5/chr-6.48.5.img.zip`
