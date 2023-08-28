@@ -354,6 +354,7 @@ auto vmbr1
 ## Setting up Debian 12
 Downside: No simultaneous sessions local/RDP for same user. Must log out locally to access via RDP.
 There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need remote access anyway (serving VMs).
+I'm not quite sure why one should insist on using debian. The setup just sucks (vs. Ubuntu). Really gotta love Debian for making this work.
 - Set up VM
   - Set CPU type to host
   - Set QEMU Guest Agent checkbox 
@@ -405,7 +406,7 @@ There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need re
   - Install GNS3:
     - (need to modify qemu package name, https://www.gns3.com/community/featured/how-install-gns3-on-debian-12-bookworm)
     - need to add telnet. Hell, console connects just die without an error if telnet is not installed.
-      - `sudo apt install -y python3-pip python3-pyqt5 python3-pyqt5.qtsvg python3-pyqt5.qtwebsockets qemu-system-x86 qemu-kvm qemu-utils libvirt-clients libvirt-daemon-system virtinst wireshark xtightvncviewer apt-transport-https ca-certificates curl gnupg2 software-properties-common telnet`
+      - `sudo apt install -y python3-pip python3-pyqt5 python3-pyqt5.qtsvg python3-pyqt5.qtwebsockets qemu-system-x86 qemu-kvm qemu-utils libvirt-clients libvirt-daemon-system virtinst wireshark xtightvncviewer apt-transport-https ca-certificates curl gnupg2 software-properties-common telnet wget`
     - get (if not yet) root: `su`
     - This is a highly specific VM, we take care our broken packages ourselves, no virtual environment, please: `pip3 install gns3-server  gns3-gui --break-system-packages`
   - Install git:
@@ -422,7 +423,22 @@ There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need re
     - `sudo su`
     - `usermod -aG libvirt student`
     - `usermod -aG kvm student`
-    - `usermod -aG wireshark student`  
+    - `usermod -aG wireshark student`
+  - Install VPCS:
+    - GNS3 (2.2.42) is pretty picky regarding VPCS version. It must be greater than 0.6.something but smaller than 0.8.
+    - Debian 12 will install 0.5.something which clearly doesn't match the cirteria
+    - The GNS3 repo (https://github.com/GNS3/vpcs) has 0.8.2. TF?
+    - Need to patch the source (as per https://github.com/GNS3/vpcs/issues/23 and https://github.com/GNS3/vpcs/issues/13)
+    - Go to releases: https://github.com/GNS3/vpcs/releases
+    - `wget https://github.com/GNS3/vpcs/archive/refs/tags/v0.6.1.tar.gz`
+    - `tar xzvf v0.6.1.tar.gz`
+    - `cd vpcs-0.6.1`
+    - `cd src`
+    - `rgetopt='int getopt(int argc, char *const *argv, const char *optstr);'`
+    - `sed -i "s/^int getopt.*/$rgetopt/" getopt.h`
+    - `sed -i vpcs.h -e 's#pcs vpc\[MAX_NUM_PTHS\];#extern pcs vpc\[MAX_NUM_PTHS\];#g'`
+    - `sed -i vpcs.c -e '/^static const char \*ident/a \\npcs vpc[MAX_NUM_PTHS];'`
+    - `unset rgetopt`
   - Start / prepare GNS3
     - Start Menu -> Education -> GNS3
     - Disable update checks: (please don't update during our labs)
