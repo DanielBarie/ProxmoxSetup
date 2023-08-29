@@ -354,7 +354,7 @@ auto vmbr1
 ## Setting up Debian 12
 Downside: No simultaneous sessions local/RDP for same user. Must log out locally to access via RDP.
 There's some workarounds (https://c-nergy.be/blog/?p=16698). But we only need remote access anyway (serving VMs).
-I'm not quite sure why one should insist on using debian. The setup just sucks (vs. Ubuntu). Really gotta love Debian for making this work.
+I'm not quite sure why one should insist on using Debian. The setup just sucks (vs. Ubuntu). Really gotta love Debian for making this work.
 - Set up VM
   - Set CPU type to host
   - Set QEMU Guest Agent checkbox 
@@ -370,6 +370,8 @@ I'm not quite sure why one should insist on using debian. The setup just sucks (
   - Add useful stuff
     - get root (`su`) 
     - `apt-get install mc nano net-tools`
+  - add non-free repo (dynamips)
+    - edit `/etc/apt/sources.list` to include `non-free` (all sections)
   - install docker (https://docs.docker.com/engine/install/debian/#install-using-the-repository)
     -  be root
     - ```
@@ -419,7 +421,8 @@ I'm not quite sure why one should insist on using debian. The setup just sucks (
   - Install GNS3:
     - (need to modify qemu package name, https://www.gns3.com/community/featured/how-install-gns3-on-debian-12-bookworm)
     - need to add telnet. Hell, console connects just die without an error if telnet is not installed.
-      - `sudo apt install -y python3-pip python3-pyqt5 python3-pyqt5.qtsvg python3-pyqt5.qtwebsockets qemu-system-x86 qemu-kvm qemu-utils libvirt-clients libvirt-daemon-system virtinst wireshark xtightvncviewer apt-transport-https ca-certificates curl gnupg2 software-properties-common telnet wget`
+    - need to add tigervnc server
+      - `sudo apt install -y python3-pip python3-pyqt5 python3-pyqt5.qtsvg python3-pyqt5.qtwebsockets qemu-system-x86 qemu-kvm qemu-utils libvirt-clients libvirt-daemon-system virtinst wireshark xtightvncviewer apt-transport-https ca-certificates curl gnupg2 software-properties-common telnet wget tigervnc-server-standalone tigervnc-viewer`
     - get (if not yet) root: `su`
     - This is a highly specific VM, we take care our broken packages ourselves, no virtual environment, please: `pip3 install gns3-server  gns3-gui --break-system-packages`
   - Install git:
