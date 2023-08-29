@@ -437,6 +437,7 @@ I'm not quite sure why one should insist on using debian. The setup just sucks (
     - `usermod -aG libvirt student`
     - `usermod -aG kvm student`
     - `usermod -aG wireshark student`
+    - `usermod -aG docker student` 
   - Install VPCS:
     - GNS3 (2.2.42) is pretty picky regarding VPCS version. It must be greater than 0.6.something but smaller than 0.8.
     - Debian 12 will install 0.5.something which clearly doesn't match the cirteria
