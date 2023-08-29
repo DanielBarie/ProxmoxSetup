@@ -439,6 +439,7 @@ I'm not quite sure why one should insist on using debian. The setup just sucks (
     - `sed -i vpcs.h -e 's#pcs vpc\[MAX_NUM_PTHS\];#extern pcs vpc\[MAX_NUM_PTHS\];#g'`
     - `sed -i vpcs.c -e '/^static const char \*ident/a \\npcs vpc[MAX_NUM_PTHS];'`
     - `unset rgetopt`
+    - `./mk.sh`
   - Start / prepare GNS3
     - Start Menu -> Education -> GNS3
     - Disable update checks: (please don't update during our labs)
