@@ -83,7 +83,10 @@ auto vmbr1
   bridge-fd 0
   # activate kernel ip forwarding
   post-up echo 1 > /proc/sys/net/ipv4/ip_forward
-  # nat all outgoing connections 
+  # nat all outgoing connections
+  # fixme: we masquerade the full /12 range
+  # with above limitation to /13 (smaller than 12)
+  # masquerading /13 would do.
   post-up iptables -t nat -A POSTROUTING -s '172.16.0.0/12' -o vmbr0 -j MASQUERADE
   # do NAT/Port Translation for incoming connecction to VMs
   # target ip/port (VM running GNS3) is 172.16.10.1:80
