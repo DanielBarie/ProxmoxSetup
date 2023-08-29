@@ -457,6 +457,22 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - `sed -i vpcs.c -e '/^static const char \*ident/a \\npcs vpc[MAX_NUM_PTHS];'`
     - `unset rgetopt`
     - `./mk.sh`
+  - auto-start virtual networking (kvm/libvirt)
+    - be root
+    - `virsh net-autostart default`
+    - `virsh net-start default`
+    - does it work?
+      - `virsh net-list --all`, needs to show active...
+      - `ifconfig`, needs to show something like
+        ```
+        virbr0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255
+        ether 52:54:00:89:9b:bd  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        ``` 
   - Start / prepare GNS3
     - Start Menu -> Education -> GNS3
     - Disable update checks: (please don't update during our labs)
