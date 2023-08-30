@@ -516,6 +516,17 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - mine is somewhere in my meta directory...
     - Generation via `ssh-keygen -o -a 100 -t ed25519`, save with approriate name (see below)
     - Push to VM template machine (172.16.10.249): `ssh-copy-id -i ~/.ssh/id_vmgns3stud student@172.16.10.249`
+    - for future Ansible work...: (jaja, dangerous. same key for root and student user...)
+      - in VM:
+        - `nano /etc/ssh/sshd_config`
+        - set `PermitRootLogin yes`
+        - `systemctl reload sshd`
+      - on local admin machine
+        - `ssh-copy-id -i ~/.ssh/id_vmgns3stud root@172.16.10.249`
+      - in VM:
+        - `nano /etc/ssh/sshd_config`
+        - set `PermitRootLogin prohibit-password`
+        - `systemctl reload sshd`
     - Lazy, don't like typing, so we modify the local (admin computer) ssh config
       - `nano ~/.ssh/config/`
       - assuming all VMs will be in the 172.16.10.2xx-range, add to file:
