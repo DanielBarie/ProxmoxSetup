@@ -467,13 +467,6 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - `make`
     - `sudo su` (to get the path right (/usr/sbin))`
     - `make install`
-  - Add student user to groups
-    - `su`
-    - `sudo su`
-    - `usermod -aG libvirt student`
-    - `usermod -aG kvm student`
-    - `usermod -aG wireshark student`
-    - `usermod -aG docker student` 
   - Install VPCS:
     - GNS3 (2.2.42) is pretty picky regarding VPCS version. It must be greater than 0.6.something but smaller than 0.8.
     - Debian 12 will install 0.5.something which clearly doesn't match the cirteria
@@ -505,13 +498,33 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 0  bytes 0 (0.0 B)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-        ``` 
+        ```
+  - Add student user to groups
+    - `su`
+    - `sudo su`
+    - `usermod -aG libvirt student`
+    - `usermod -aG kvm student`
+    - `usermod -aG wireshark student`
+    - `usermod -aG docker student` 
   - Start / prepare GNS3
     - Start Menu -> Education -> GNS3
     - Disable update checks: (please don't update during our labs)
       - Edit -> Preferences -> General -> Miscellaneous (remove checkmark)
     - Set VPCS path:
       - Edit -> Preferences -> VPCS -> path to compiled executable (i.e. ~/vpcs-0.6.1/src/vpcs)
+  - Push SSH key (generated on local machine) to VM
+    - mine is somewhere in my meta directory...
+    - Generation via `ssh-keygen -o -a 100 -t ed25519`, save with approriate name (see below)
+    - Push to VM template machine (172.16.10.249): `ssh-copy-id -i ~/.ssh/id_vmgns3stud student@172.16.10.249`
+    - Lazy, don't like typing, so we modify the local (admin computer) ssh config
+      - `nano ~/.ssh/config/`
+      - assuming all VMs will be in the 172.16.10.2xx-range, add to file:
+        ```
+        Host 172.16.10.2??
+        User student
+        IdentityFile ~/.ssh/id_vmgns3stud
+        IdentitiesOnly yes
+        ```
 
 
   
