@@ -810,4 +810,5 @@ Get some real guests going
            
 # ToDo:  
 - Give each student a private net (i.e. isolate/firewall VM instances)
+- Write ansible playbook for initial VM template config.
                                                 
