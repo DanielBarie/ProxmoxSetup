@@ -147,7 +147,34 @@ auto vmbr1
   ```
 - Create a Dataset for storing ISOs because we don't like the default setting (don't want to fill up the system installation SSD). So we want to store ISOs on the storage-hdd pool:
    - `zfs create -o mountpoint=/var/lib/vz/template/iso storage-hdd/iso`
-  
+
+## Prepare Terraforming
+- Add Role for Terraform (may do pretty much anything...)
+  ```
+  pveum role add tf-role -privs \
+  VM.Allocate VM.Clone \
+  VM.Config.CDROM VM.Config.CPU \
+  VM.Config.Cloudinit VM.Config.Disk \
+  VM.Config.HWType VM.Config.Memory \
+  VM.Config.Network VM.Config.Options \
+  VM.Monitor VM.Audit VM.PowerMgmt \
+  Datastore.AllocateSpace \
+  Datastore.Audit"
+  ```
+- Add user `tf-user`:
+  ```
+  pveum user add tf-user@pve
+  ```
+- Let newly created user have role:
+  ```
+  pveum aclmod / -user tf-user@pve -role tf-role
+  ```
+- create API token (so we may acces the server)
+  ```
+  pveum user token add tf-user@pve terraform-token --privsep=0
+  ```
+  Take care to save token ID and value.
+- Sidenote: Install Terraform on local machine. Works well in WSL (https://techcommunity.microsoft.com/t5/azure-developer-community-blog/configuring-terraform-on-windows-10-linux-sub-system/ba-p/393845)
 # Fun with VMs
 ## The GNS3 VM
   - GNS3 provides a KVM image, this is what Proxmox is made for: https://github.com/GNS3/gns3-gui/releases
@@ -191,6 +218,7 @@ auto vmbr1
   - Setting IP Adresses via DHCP. When cloning a VM, PVE will randomly assign a MAC address to the clone. So we need to fix that to be able to assign a certain IP to the instance via DHCP.
   
  We'll go for setting IPs via DHCP. Just because I haven't had the time yet to implement cloud init.
+ Update: Let's try terraforming...
 #### Setting IPs via DHCP.
 - Set a known MAC: `qm set <ID> -net0 virtio=xx:xx:xx:xx:xx:xx,bridge=vmbr1`
 #### Cloud Init
