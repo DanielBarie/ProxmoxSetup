@@ -375,6 +375,8 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - `apt-get install mc nano net-tools`
   - add non-free repo (dynamips)
     - edit `/etc/apt/sources.list` to include `non-free` (all sections)
+    - `apt-get update`
+    - `apt-get install dynamips`
   - install docker (https://docs.docker.com/engine/install/debian/#install-using-the-repository)
     -  be root
     - ```
