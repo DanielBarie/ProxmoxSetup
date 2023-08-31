@@ -541,7 +541,12 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - delete host keys of template vm
     - TODO (run one-shot service at first vm clone startup which will generate new host keys)
 
-
+## Terraforming...
+- make sure, VM has a cloud init drive
+- Create Clone of VM
+- Convert to template
+- wite terraform files
+- `tf init`
   
 ## Mikrotik CHR Setup
   - Get current image: `https://download.mikrotik.com/routeros/6.48.5/chr-6.48.5.img.zip`
