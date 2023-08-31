@@ -78,17 +78,14 @@ auto vmbr1
   # this is specific to my location.
   # so take care...
   # as an alternative: we may choose to nat private ip addresses coming into our server...
-  address 172.16.31.254/13
+  address 172.23.255.254/13
   bridge-ports none
   bridge-stp off
   bridge-fd 0
   # activate kernel ip forwarding
   post-up echo 1 > /proc/sys/net/ipv4/ip_forward
   # nat all outgoing connections
-  # fixme: we masquerade the full /12 range
-  # with above limitation to /13 (smaller than 12)
-  # masquerading /13 would do.
-  post-up iptables -t nat -A POSTROUTING -s '172.16.0.0/12' -o vmbr0 -j MASQUERADE
+  post-up iptables -t nat -A POSTROUTING -s '172.16.0.0/13' -o vmbr0 -j MASQUERADE
   # do NAT/Port Translation for incoming connecction to VMs
   # target ip/port (VM running GNS3) is 172.16.10.1:80
   # source is something coming in to vmbr0 on port 9001 proto tcp
@@ -401,7 +398,7 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - cpu-checker
   - Add useful stuff
     - get root (`su`) 
-    - `apt-get install mc nano net-tools`
+    - `apt-get install mc nano net-tools traceroute`
   - add non-free repo (dynamips)
     - edit `/etc/apt/sources.list` to include `non-free` (all sections)
     - `apt-get update`
@@ -569,9 +566,9 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
   ip socks set enabled=no
   ip upnp set enabled=no
   ip dns set servers=9.9.9.9,8.8.8.8
-  ip address add address=172.16.0.1/16 interface=ether1
+  ip address add address=172.16.0.1/13 interface=ether1
   ip dhcp-server network add address=172.16.0.0/13 dns-server=9.9.9.9
-  ip dhcp-server network set gateway=172.16.31.254
+  ip dhcp-server network set gateway=172.23.255.254
   ip route add gateway=172.16.31.254
   ip pool add name=GNSVMPool range=172.16.10.1-172.16.10.250
   ip pool add name=KaliPool range=172.16.11.10-172.16.11.200
