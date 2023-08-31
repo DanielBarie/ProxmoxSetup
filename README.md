@@ -1,21 +1,22 @@
 # Using Proxmox to serve GNS3 VMs for a Student Networking Lab.
-
-Our goal is to set up a Proxmox Server so as to be able to provide students with indiviual instances of the GNS3 VM. 
+Our goal is to set up lab environment for students to learn basic network / network management.
 We need to do this efficiently because the number of students is quite large. 
-So we'll configure one instance of the GNS3 VM with all necessary appliances and create a template thereof.
-The template will be used to create clones - one for each student.
-These clones may be spun up before the lab session and shut down afterwards.
 
 There are some base assumptions:
 - Max. number of concurrent students per lab session is approx. 25.
 
 And some constraints:
-- The server location is outside the lab (physically and logically (see below)).
-- The server is located in a separate IP subnet with other servers.
-- Network access to various subnets from the student lab is impossible whereas the server may freely access these.
-- Network access to the outside world (i.e. the Internet) from the student lab is only possible via proxy whereas the server may freely access any internet location.
-- Access to the VMs shall only be possible during lab hours.
+- We work in a computing lab
+- no funding for continuous licensing fees (basically a one-shot lump sum of money that has/had to be spent immediately).
+- Lab infrastructure (i.e. Windows Desktop PCs) can/may not be modified (no additional programs)
 
+# Decision based on contraints/available infrastructure
+- no hardware-based solution (i.e. cobbling individual nodes (e.g. RasPi even if available)), too mich of a hassle for a large number of students
+- Set up Virtualization Server: Proxmox, no licensing fees
+- Serve VMs to students, installation of programs on local computing lab clients required
+- run a simulation environment on the VMs (GNS3, several alternatives available which aren't nearly as feature-rich as GNS3)
+- Provide a complete desktop environment to students (i.e. including Word Processor), so lab reports may be composed/submitted directly from VMs
+- 
 
 # Prerequisites
 So I have this nice litte server...
