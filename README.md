@@ -537,7 +537,7 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
         IdentityFile ~/.ssh/id_vmgns3stud
         IdentitiesOnly yes
         ```
-  - Give clones individual SSH host keys
+  - Give clones individual SSH host keys (else will be identical...)
     - delete host keys of template vm
     - TODO (run one-shot service at first vm clone startup which will generate new host keys)
 
