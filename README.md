@@ -537,6 +537,7 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
   - Give clones individual SSH host keys (else will be identical..., check with `ssh-keyscan host | ssh-keygen -lf -`)
     - delete host keys of template vm
     - TODO (run one-shot service at first vm clone startup which will generate new host keys)
+  - Add Wireshark Packet Capture Reference File
 
 ## Terraforming...
 - make sure, VM has a cloud init drive
