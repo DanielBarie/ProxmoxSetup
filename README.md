@@ -398,7 +398,7 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - cpu-checker
   - Add useful stuff
     - get root (`su`) 
-    - `apt-get install mc nano net-tools traceroute nmap whois dnsutils`
+    - `apt-get install mc nano net-tools traceroute nmap whois dnsutils mtr`
   - add non-free repo (dynamips)
     - edit `/etc/apt/sources.list` to include `non-free` (all sections)
     - `apt-get update`
