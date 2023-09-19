@@ -145,6 +145,8 @@ auto vmbr1
   ```
 - Create a Dataset for storing ISOs because we don't like the default setting (don't want to fill up the system installation SSD). So we want to store ISOs on the storage-hdd pool:
    - `zfs create -o mountpoint=/var/lib/vz/template/iso storage-hdd/iso`
+- ZFS drive kapott?
+  - https://forum.proxmox.com/threads/how-do-i-replace-a-hard-drive-in-a-healthy-zfs-raid.64528/
 
 ## Prepare Terraforming
 - Add Role for Terraform (may do pretty much anything...)
