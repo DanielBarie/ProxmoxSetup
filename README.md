@@ -180,6 +180,11 @@ auto vmbr1
   - [vars.tf](vars.tf): Variable declarations for main terraform file.
   - [terraform.tfvars](terraform.tfvars): Contains user id and secret, referenced from vars.tf
 # Fun with VMs
+This section is sort of a documentation along the way.  
+- First, we tried running GNS3 VM (Compute) images. These were accessed from GUI components installed on the local Windows PCs. We thus failed to achieve one of our main goals (not to install software on the pool PCs). Another issue was the permanent danger of incompatible versions of GUI and VM. Not great. So the Web GUI of the VM was the next logical step. Well, not quite ready, yet.
+- I like Ubuntu and there's good documentation for installing GNS3 in a Ubuntu environment. So we chose to have a full desktop environment with GUI and compute (quem) installed in Ubuntu VMs. RDP / VNC won't work as intended. Not such a good idea.
+- So much pain later: Debian manual install is a pain. But it finally works (pretty much as intended).
+- 
 ## The GNS3 VM
   - GNS3 provides a KVM image, this is what Proxmox is made for: https://github.com/GNS3/gns3-gui/releases
   - This will give us a Web-UI included with the VM or a way of connecting to the VM via the Windows GUI.
@@ -546,7 +551,7 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
   - Add Wireshark Packet Capture Reference File
 
 ## Terraforming...
-- make sure, VM has a cloud init drive
+- make sure VM has a cloud init drive
 - Create Clone of VM
 - Convert to template
 - wite terraform files
