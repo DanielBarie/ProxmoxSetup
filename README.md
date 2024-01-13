@@ -6,17 +6,17 @@ There are some base assumptions:
 - Max. number of concurrent students per lab session is approx. 25.
 
 And some constraints:
-- We work in a computing lab
-- no funding for continuous licensing fees (basically a one-shot lump sum of money that has/had to be spent immediately).
-- Lab infrastructure (i.e. Windows Desktop PCs) can/may not be modified (no additional programs)
+- We work in a computing lab.
+- No funding for continuous licensing fees (basically a one-shot lump sum of money that has/had to be spent immediately).
+- Lab infrastructure (i.e. Windows Desktop PCs) can/may not be modified (no additional programs/apps).
 
 # Decision based on contraints/available infrastructure
-- no hardware-based solution (i.e. cobbling individual nodes (e.g. RasPi even if available)), too mich of a hassle for a large number of students
-- Set up Virtualization Server: Proxmox, no licensing fees
-- Serve VMs to students, installation of programs on local computing lab clients required
-- run a simulation environment on the VMs (GNS3, several alternatives available which aren't nearly as feature-rich as GNS3)
-- Provide a complete desktop environment to students (i.e. including Word Processor), so lab reports may be composed/submitted directly from VMs
-- 
+- No hardware-based solution (i.e. cobbling individual nodes (e.g. RasPi even if available)), too much of a hassle for a large number of students.
+- Set up Virtualization Server: Proxmox, no licensing fees.
+- Serve VMs to students, no installation of programs on local computing lab clients required, VMs can be reached via RDP.
+- Run a simulation environment on the VMs (GNS3, several alternatives available which aren't nearly as feature-rich as GNS3).
+- Provide a complete desktop environment to students (i.e. including Word Processor), so lab reports may be composed/submitted directly from VMs.
+ 
 
 # Prerequisites
 So I have this nice litte server...
