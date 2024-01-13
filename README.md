@@ -175,6 +175,10 @@ auto vmbr1
   ```
   Take care to save token ID and value.
 - Sidenote: Install Terraform on local machine. Works well in WSL (https://techcommunity.microsoft.com/t5/azure-developer-community-blog/configuring-terraform-on-windows-10-linux-sub-system/ba-p/393845)
+- Files required:
+  - [main.tf](main.tf): Main terraform file.
+  - [vars.tf](vars.tf): Variable declarations for main terraform file.
+  - [terraform.tfvars](terraform.tfvars): Contains user id and secret, referenced from vars.tf
 # Fun with VMs
 ## The GNS3 VM
   - GNS3 provides a KVM image, this is what Proxmox is made for: https://github.com/GNS3/gns3-gui/releases
