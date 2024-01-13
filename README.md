@@ -551,6 +551,7 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
 - Convert to template
 - wite terraform files
 - `tf init`
+- `tf apply`
   
 ## Mikrotik CHR Setup
   - Get current image: `https://download.mikrotik.com/routeros/6.48.5/chr-6.48.5.img.zip`
