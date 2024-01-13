@@ -1,6 +1,6 @@
 # Using Proxmox to serve GNS3 VMs for a Student Networking Lab.
 Our goal is to set up lab environment for students to learn basic network / network management.
-We need to do this efficiently because the number of students is quite large. 
+We need to do this efficiently because the number of students is quite large. Terraform will be used for duplicating a VM template.
 
 There are some base assumptions:
 - Max. number of concurrent students per lab session is approx. 25.
