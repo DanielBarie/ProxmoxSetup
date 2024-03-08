@@ -549,6 +549,7 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - delete host keys of template vm
     - TODO (run one-shot service at first vm clone startup which will generate new host keys)
   - Add Wireshark Packet Capture Reference File
+  - Include local language for spellchecking in LibreOffice
 
 ## Terraforming...
 - make sure VM has a cloud init drive
