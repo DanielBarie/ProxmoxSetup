@@ -179,6 +179,16 @@ auto vmbr1
   - [main.tf](main.tf): Main terraform file.
   - [vars.tf](vars.tf): Variable declarations for main terraform file.
   - [terraform.tfvars](terraform.tfvars): Contains user id and secret, referenced from vars.tf
+
+## Add 2FA for admin (i.e. root@pam) account
+Click TFA while in the account menu:  
+![grafik](https://github.com/DanielBarie/ProxmoxSetup/assets/73287620/b9a616a3-ae9d-4c03-93de-5b11b29d45e6)
+
+Add some recovery codes and the desired second factor:
+![grafik](https://github.com/DanielBarie/ProxmoxSetup/assets/73287620/95c2ae9b-e0f9-422c-af7d-63dbef80faaf)
+
+
+
 # Fun with VMs
 This section is sort of a documentation along the way.  
 - First, we tried running GNS3 VM (Compute) images. These were accessed from GUI components installed on the local Windows PCs. We thus failed to achieve one of our main goals (not to install software on the pool PCs). Another issue was the permanent danger of incompatible versions of GUI and VM. Not great. So the Web GUI of the VM was the next logical step. Well, not quite ready, yet.
