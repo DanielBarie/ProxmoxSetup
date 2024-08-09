@@ -865,13 +865,40 @@ Get some real guests going
 - install cloudinit
 - create cloud init drive for vm (proxmox gui)
 - install xrdp
-- restrict network config:  (attention, polkit has been updated!)
+- restrict network config:  (attention, polkit has been updated!) (might be overwritten when package(s) get updated)
  - edit `/usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy`
  - in sections `org.freedesktop.NetworkManager.settings.modify.own`, `org.freedesktop.NetworkManager.network-control`, `org.freedesktop.NetworkManager.enable-disable-network` change setting inside `<allow_active>` to `auth_admin`.
-- restrict hibernate:  
+- restrict hibernate:  (might be overwritten when package(s) get updated)
  - edit `/usr/share/polkit-1/actions/org.xfce.power.policy`
  - change settings in section `org.xfce.power.xfce4-pm-helper` to `auth_admin`
-- restrict shutdown:
+- restrict shutdown: (might be overwritten when package(s) get updated)
  - edit `/usr/share/polkit-1/actions/org.xfce.session.policy`
  - change settings in section `org.xfce.session.xfsm-shutdown-helper` to `auth_admin`
-                                                
+- restrict shutdown (user rules, will not be overwritten):
+ - ```nano /etc/polkit-1/rules.d/10-admin-shutdown-reboot.rules```
+ - insert
+   ```
+   polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.login1.power-off" ||
+        action.id == "org.freedesktop.login1.power-off-ignore-inhibit" ||
+        action.id == "org.freedesktop.login1.power-off-multiple-sessions" ||
+        action.id == "org.freedesktop.login1.reboot" ||
+        action.id == "org.freedesktop.login1.reboot-ignore-inhibit" ||
+        action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+        action.id == "org.freedesktop.login1.set-reboot-parameter" ||
+        action.id == "org.freedesktop.login1.set-reboot-to-firmware-setup" ||
+        action.id == "org.freedesktop.login1.set-reboot-to-boot-loader-menu" ||
+        action.id == "org.freedesktop.login1.set-reboot-to-boot-loader-entry" ||
+        action.id == "org.freedesktop.login1.suspend" ||
+        action.id == "org.freedesktop.login1.suspend-ignore-inhibit" ||
+        action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+        action.id == "org.freedesktop.login1.hibernate" ||
+        action.id == "org.freedesktop.login1.hibernate-ignore-inhibit" ||
+        action.id == "org.freedesktop.login1.hibernate-multiple-sessions"
+    ) {
+        return polkit.Result.AUTH_ADMIN;
+    }
+   });
+   ```
+ - save
+ - restart polkit: `service polkit restart`
