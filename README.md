@@ -216,6 +216,7 @@ This section is sort of a documentation along the way.
   sudo apt-get install qemu-guest-agent
   sudo systemctl start qemu-guest-agent
   ```
+  if systemctl doesn't work, do `service qemu-guest-agent start`
   - Set locale `sudo dpkg-reconfigure locales`
   - To fix annoying keyboard: `sudo dpkg-reconfigure keyboard-configuration`, happily overriding previously set defaults. 
   - install useful software: `sudo apt-get install mc nano`
