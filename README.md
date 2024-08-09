@@ -853,4 +853,19 @@ Get some real guests going
 # ToDo:  
 - Give each student a private net (i.e. isolate/firewall VM instances)
 - Write ansible playbook for initial VM template config.
+
+# If the only tool you have is a hammer...
+## Serving other VMs for Student Labs
+### LV
+- use xubuntu iso in minimal installation
+- configure unattended upgrades (automatic reboot)
+- install nano, mc
+- install openssh
+- install / restart (service, not systemctl) qemu-guest-agent
+- install cloudinit
+- create cloud init drive for vm (proxmox gui)
+- install xrdp
+- restrict network config:
+ - edit `/usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy`
+ - in sections `org.freedesktop.NetworkManager.settings.modify.own`, `org.freedesktop.NetworkManager.network-control`, `org.freedesktop.NetworkManager.enable-disable-network` change setting inside `<allow_active>` to `auth_admin`.
                                                 
