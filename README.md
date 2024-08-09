@@ -857,7 +857,7 @@ Get some real guests going
 # If the only tool you have is a hammer...
 ## Serving other VMs for Student Labs
 ### LV
-- use xubuntu iso in minimal installation
+- use xubuntu 24.04 iso in minimal installation
 - configure unattended upgrades (automatic reboot)
 - install nano, mc
 - install openssh
@@ -865,7 +865,13 @@ Get some real guests going
 - install cloudinit
 - create cloud init drive for vm (proxmox gui)
 - install xrdp
-- restrict network config:
+- restrict network config:  (attention, polkit has been updated!)
  - edit `/usr/share/polkit-1/actions/org.freedesktop.NetworkManager.policy`
  - in sections `org.freedesktop.NetworkManager.settings.modify.own`, `org.freedesktop.NetworkManager.network-control`, `org.freedesktop.NetworkManager.enable-disable-network` change setting inside `<allow_active>` to `auth_admin`.
+- restrict hibernate:  
+ - edit `/usr/share/polkit-1/actions/org.xfce.power.policy`
+ - change settings in section `org.xfce.power.xfce4-pm-helper` to `auth_admin`
+- restrict shutdown:
+ - edit `/usr/share/polkit-1/actions/org.xfce.session.policy`
+ - change settings in section `org.xfce.session.xfsm-shutdown-helper` to `auth_admin`
                                                 
