@@ -552,30 +552,59 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
       - Edit -> Preferences -> General -> Miscellaneous (remove checkmark)
     - Set VPCS path:
       - Edit -> Preferences -> VPCS -> path to compiled executable (i.e. ~/vpcs-0.6.1/src/vpcs)
-  - Push SSH key (generated on local machine) to VM
-    - mine is somewhere in my meta directory...
-    - Generation via `ssh-keygen -o -a 100 -t ed25519`, save with approriate name (see below)
-    - Push to VM template machine (172.16.10.249): `ssh-copy-id -i ~/.ssh/id_vmgns3stud student@172.16.10.249`
-    - for future Ansible work...: (jaja, dangerous. same key for root and student user...)
-      - in VM:
-        - `nano /etc/ssh/sshd_config`
-        - set `PermitRootLogin yes`
-        - `systemctl reload sshd`
-      - on local admin machine
-        - `ssh-copy-id -i ~/.ssh/id_vmgns3stud root@172.16.10.249`
-      - in VM:
-        - `nano /etc/ssh/sshd_config`
-        - set `PermitRootLogin prohibit-password`
-        - `systemctl reload sshd`
-    - Lazy, don't like typing, so we modify the local (admin computer) ssh config
-      - `nano ~/.ssh/config/`
-      - assuming all VMs will be in the 172.16.10.2xx-range, add to file:
-        ```
-        Host 172.16.10.2??
-        User student
-        IdentityFile ~/.ssh/id_vmgns3stud
-        IdentitiesOnly yes
-        ```
+ - Prevent Shutdown of VM (user rules, will not be overwritten)  
+  - ```nano /etc/polkit-1/rules.d/10-admin-shutdown-reboot.rules```
+  - insert
+    ```
+    polkit.addRule(function(action, subject) {
+     if (action.id == "org.freedesktop.login1.power-off" ||
+         action.id == "org.freedesktop.login1.power-off-ignore-inhibit" ||
+         action.id == "org.freedesktop.login1.power-off-multiple-sessions" ||
+         action.id == "org.freedesktop.login1.reboot" ||
+         action.id == "org.freedesktop.login1.reboot-ignore-inhibit" ||
+         action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+         action.id == "org.freedesktop.login1.set-reboot-parameter" ||
+         action.id == "org.freedesktop.login1.set-reboot-to-firmware-setup" ||
+         action.id == "org.freedesktop.login1.set-reboot-to-boot-loader-menu" ||
+         action.id == "org.freedesktop.login1.set-reboot-to-boot-loader-entry" ||
+         action.id == "org.freedesktop.login1.suspend" ||
+         action.id == "org.freedesktop.login1.suspend-ignore-inhibit" ||
+         action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+         action.id == "org.freedesktop.login1.hibernate" ||
+         action.id == "org.freedesktop.login1.hibernate-ignore-inhibit" ||
+         action.id == "org.freedesktop.login1.hibernate-multiple-sessions"
+     ) {
+         return polkit.Result.AUTH_ADMIN;
+     }
+    });
+    ```
+   - save
+   - restart polkit: `service polkit restart`
+     
+ - Push SSH key (generated on local machine) to VM
+   - mine is somewhere in my meta directory...
+   - Generation via `ssh-keygen -o -a 100 -t ed25519`, save with approriate name (see below)
+   - Push to VM template machine (172.16.10.249): `ssh-copy-id -i ~/.ssh/id_vmgns3stud student@172.16.10.249`
+   - for future Ansible work...: (jaja, dangerous. same key for root and student user...)
+     - in VM:
+       - `nano /etc/ssh/sshd_config`
+       - set `PermitRootLogin yes`
+       - `systemctl reload sshd`
+     - on local admin machine
+       - `ssh-copy-id -i ~/.ssh/id_vmgns3stud root@172.16.10.249`
+     - in VM:
+       - `nano /etc/ssh/sshd_config`
+       - set `PermitRootLogin prohibit-password`
+       - `systemctl reload sshd`
+   - Lazy, don't like typing, so we modify the local (admin computer) ssh config
+     - `nano ~/.ssh/config/`
+     - assuming all VMs will be in the 172.16.10.2xx-range, add to file:
+       ```
+       Host 172.16.10.2??
+       User student
+       IdentityFile ~/.ssh/id_vmgns3stud
+       IdentitiesOnly yes
+       ```
   - Give clones individual SSH host keys (else will be identical..., check with `ssh-keyscan host | ssh-keygen -lf -`)
     - delete host keys of template vm
     - TODO (run one-shot service at first vm clone startup which will generate new host keys)
@@ -586,7 +615,7 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
 - make sure VM has a cloud init drive
 - Create Clone of VM
 - Convert to template
-- wite terraform files
+- wite terraform files (adjust names as per lab)
 - `terraform init`
 - `terraform plan`
 - `terraform apply`
