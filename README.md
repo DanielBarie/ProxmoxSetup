@@ -182,7 +182,10 @@ auto vmbr1
  
 ### Troubleshooting Terraforming
 After upgrading to PVE8, terraforming would start but never complete. Basically no disk IO -> nothing happening. All the while, Terraform was happily giving elapsed time statements. Some debugging of the telmate provider (https://registry.terraform.io/providers/Telmate/proxmox/latest/docs) gave ``` HTTP/1.1 403 Permission check failed (/sdn/zones/localnetwork/vmbr1, SDN.Use)```. So if that (new) permission isn't given, no terraforming will actually happen. See https://github.com/Telmate/terraform-provider-proxmox/issues/869 and https://github.com/allenporter/k8s-gitops/issues/1428  
-Fixed by adding permission: ```pveum acl modify / -user tf-user@pve -role PVESDNUser```
+Fixed by adding permission: SDN.Use (Datacenter -> Permissions -> Roles)
+
+Next issue after upgrade to PVE8 was Telmate plugin not handling changed data types: See https://github.com/Telmate/terraform-provider-proxmox/issues/863. Switched to form by TheGameProfi: https://registry.terraform.io/providers/TheGameProfi/proxmox/2.9.15 Needs some additional permissions in the pve role: vm.migrate, sys.audit, sys.console, sys.modify
+
 
 
 ## Add 2FA for admin (i.e. root@pam) account
