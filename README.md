@@ -13,7 +13,7 @@ And some constraints:
 # Decision based on contraints/available infrastructure
 - No hardware-based solution (i.e. cobbling individual nodes (e.g. RasPi even if available)), too much of a hassle for a large number of students.
 - Set up Virtualization Server: Proxmox, no licensing fees.
-- Serve VMs to students, no installation of programs on local computing lab clients required, VMs can be reached via RDP.sys.
+- Serve VMs to students, no installation of programs on local computing lab clients required, VMs can be reached via RDP.
 - Run a simulation environment on the VMs (GNS3, several alternatives available which aren't nearly as feature-rich as GNS3).
 - Provide a complete desktop environment to students (i.e. including Word Processor), so lab reports may be composed/submitted directly from VMs.
  
