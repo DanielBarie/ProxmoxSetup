@@ -3,7 +3,7 @@ Our goal is to set up lab environment for students to learn basic network / netw
 We need to do this efficiently because the number of students is quite large. Terraform will be used for duplicating a VM template.
 
 There are some base assumptions:
-- Max. number of concurrent students per lab session is approx. 25.
+- Max. number of concurrent students per lab session is approx. 25. (Has proven to work for up to 50 concurrent users after RAM upgrade to 1TB)
 
 And some constraints:
 - We work in a computing lab.
