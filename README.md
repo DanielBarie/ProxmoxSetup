@@ -40,12 +40,13 @@ Model name:                      AMD EPYC 7352 24-Core Processor
 
 
 # tldr
-Proxmox doesn't quite like the server's onboard graphics. X11 won't start and I get stuck on a text mode console with the Proxmox v7 installer.
+Started out on PVE7. Proxmox doesn't quite like the server's onboard graphics. X11 won't start and I get stuck on a text mode console with the Proxmox v7 installer.
 Had to install a basic Debian Bullseye ISO to get started.
 Proceeded along the lines of https://pve.proxmox.com/wiki/Install_Proxmox_VE_on_Debian_11_Bullseye.
 Ran into several issues on the way.
+System has been upgraded to PVE8. Some hiccups along the way (fixes documented at relevant locations).
 
-# Issues that had to be fixed
+# First time setup (PVE7) issues that had to be fixed
 ## Networking
 - The Proxmox installer will overwrite the network configuration.
 - Console login, brought up network:
