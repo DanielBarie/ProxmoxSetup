@@ -195,7 +195,7 @@ And finally switched back to the original telmate provider with a later version 
 
 (to be fixed in conjunction with error below): VMs do get created but terraforming hangs at IP verfication. Turns out, VMs didn't boot (so the first few got created but were stuck in a boot loop -> ip verification failed). Problem was with a boot disk mixup, see https://github.com/Telmate/terraform-provider-proxmox/issues/704
 
-(to be fixed in terraform files): Error: error updating VM: 500 invalid bootorder: device 'scsi0' does not exist', error status:. We now need to explicitly state the disks that are to be created. Seems like PVE8 implemented some better parameter verfification for boot disk/boot order setting. Included `disks` block in terraform configuration file.
+Fixed in main.tf: Error: error updating VM: 500 invalid bootorder: device 'scsi0' does not exist', error status:. We now need to explicitly state the disks that are to be created. Seems like PVE8 implemented some better parameter verfification for boot disk/boot order setting. Included `disks` block in terraform configuration file.
 
 
 ## Add 2FA for admin (i.e. root@pam) account
