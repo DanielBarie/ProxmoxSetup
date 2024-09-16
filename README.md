@@ -475,9 +475,11 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - (need to modify qemu package name, https://www.gns3.com/community/featured/how-install-gns3-on-debian-12-bookworm)
     - need to add telnet. Hell, console connects just die without an error if telnet is not installed.
     - need to add tigervnc server
-      - `sudo apt install -y python3-pip python3-pyqt5 python3-pyqt5.qtsvg python3-pyqt5.qtwebsockets qemu-system-x86 qemu-kvm qemu-utils libvirt-clients libvirt-daemon-system virtinst wireshark xtightvncviewer apt-transport-https ca-certificates curl gnupg2 software-properties-common telnet wget tigervnc-standalone-server tigervnc-viewer`
+      - `sudo apt install -y python3-pip python3-pyqt5 python3-pyqt5.qtsvg python3-pyqt5.qtwebsockets qemu-system-x86 qemu-kvm qemu-utils libvirt-clients libvirt-daemon-system virtinst wireshark xtightvncviewer apt-transport-https ca-certificates curl gnupg2 software-properties-common telnet wget tigervnc-standalone-server tigervnc-viewer busybox-static`
+      - with version 2.2.49 (at least somewhere between 2.2.42 and 2.2.49) we need to add `busybox-static` to that list (done above). This also holds true when upgrading GNS3 (e.g. from 2.2.42 to 2.2.49).
     - get (if not yet) root: `su`
     - This is a highly specific VM, we take care our broken packages ourselves, no virtual environment, please: `pip3 install gns3-server  gns3-gui --break-system-packages`
+    - Upgrading is done with `pip3 install --upgrade gns3-server  gns3-gui --break-system-packages`
   - Install git:
     -   apt-get install git
   - compile and install ubridge
