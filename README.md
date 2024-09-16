@@ -13,7 +13,7 @@ And some constraints:
 # Decision based on contraints/available infrastructure
 - No hardware-based solution (i.e. cobbling individual nodes (e.g. RasPi even if available)), too much of a hassle for a large number of students.
 - Set up Virtualization Server: Proxmox, no licensing fees.
-- Serve VMs to students, no installation of programs on local computing lab clients required, VMs can be reached via RDP.
+- Serve VMs to students, no installation of programs on local computing lab clients required, VMs can be reached via RDP.sys.
 - Run a simulation environment on the VMs (GNS3, several alternatives available which aren't nearly as feature-rich as GNS3).
 - Provide a complete desktop environment to students (i.e. including Word Processor), so lab reports may be composed/submitted directly from VMs.
  
@@ -184,7 +184,7 @@ auto vmbr1
 After upgrading to PVE8, terraforming would start but never complete. Basically no disk IO -> nothing happening. All the while, Terraform was happily giving elapsed time statements. Some debugging of the telmate provider (https://registry.terraform.io/providers/Telmate/proxmox/latest/docs) gave ``` HTTP/1.1 403 Permission check failed (/sdn/zones/localnetwork/vmbr1, SDN.Use)```. So if that (new) permission isn't given, no terraforming will actually happen. See https://github.com/Telmate/terraform-provider-proxmox/issues/869 and https://github.com/allenporter/k8s-gitops/issues/1428  
 Fixed by adding permission: SDN.Use (Datacenter -> Permissions -> Roles)
 
-Next issue after upgrade to PVE8 was Telmate plugin not handling changed data types: See https://github.com/Telmate/terraform-provider-proxmox/issues/863. Switched to form by TheGameProfi: https://registry.terraform.io/providers/TheGameProfi/proxmox/2.9.15 Needs some additional permissions in the pve role: vm.migrate, sys.audit, sys.console, sys.modify
+Next issue after upgrade to PVE8 was Telmate plugin not handling changed data types: See https://github.com/Telmate/terraform-provider-proxmox/issues/863. Switched to fork by TheGameProfi: https://registry.terraform.io/providers/TheGameProfi/proxmox/2.9.15 Needs some additional permissions in the pve role: `vm.migrate, pool.allocate, sys.audit, sys.console, sys.modify`
 
 
 
