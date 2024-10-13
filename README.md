@@ -523,6 +523,7 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - `sed -i vpcs.c -e '/^static const char \*ident/a \\npcs vpc[MAX_NUM_PTHS];'`
     - `unset rgetopt`
     - `./mk.sh`
+    - install vpcs application `sudo cp vpcs /usr/bin`
   - auto-start virtual networking (kvm/libvirt)
     - be root
     - `virsh net-autostart default`
