@@ -437,8 +437,9 @@ I'm not quite sure why one should insist on using Debian. The setup just sucks (
     - bridge-utils
     - cpu-checker
   - Add useful stuff
+    - This is just for making our life as admin a little bit more convenient (timesyncd: VMs will lose time when suspended between labs, will re-sync only after after reboot. Periodically calling timesyncd with cron will fix this. We need a shell script for that to be baked into the VM image. qm set via qemu-guest-agent doesn't work because qm doesn't support the guest-set-time parameter of the guest utils.) 
     - get root (`su`) 
-    - `apt-get install mc nano net-tools traceroute nmap whois dnsutils mtr`
+    - `apt-get install mc nano net-tools traceroute nmap whois dnsutils mtr psmisc systemd-timesyncd`
   - add non-free repo (dynamips)
     - edit `/etc/apt/sources.list` to include `non-free` (all sections)
     - `apt-get update`
