@@ -954,3 +954,7 @@ Get some real guests going
    ```
  - save
  - restart polkit: `service polkit restart`
+
+## Troubleshooting VMs
+### Wrong Keyboard Layout with noVNC
+try ```qm set <vmid> --keyboard <lang>```
