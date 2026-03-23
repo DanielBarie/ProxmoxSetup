@@ -1,4 +1,7 @@
 # Using Proxmox to serve GNS3 VMs for a Student Networking Lab.
+
+ToDo: This clearly needs some re-structuring, Wiki, maybe?
+
 Our goal is to set up lab environment for students to learn basic network / network management.
 We need to do this efficiently because the number of students is quite large. Terraform will be used for duplicating a VM template.
 
@@ -958,3 +961,127 @@ Get some real guests going
 ## Troubleshooting VMs
 ### Wrong Keyboard Layout with noVNC
 try ```qm set <vmid> --keyboard <lang>```
+
+### Getting xrdp to work on XUbuntu
+This is an ansible playbook:
+```
+---
+- name: Install and configure XRDP on Xubuntu/XFCE
+  hosts: xubuntu_vm
+  become: true
+  vars:
+    remote_user_name: your_username
+
+  handlers:
+    - name: restart xrdp
+      ansible.builtin.systemd:
+        name: xrdp
+        state: restarted
+        enabled: true
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install XRDP, Xorg backend, XFCE extras, and dbus-x11
+      ansible.builtin.apt:
+        name:
+          - xrdp
+          - xorgxrdp
+          - xfce4
+          - xfce4-goodies
+          - dbus-x11
+        state: present
+
+    - name: Add xrdp user to ssl-cert group
+      ansible.builtin.user:
+        name: xrdp
+        groups: ssl-cert
+        append: true
+      notify: restart xrdp
+
+    - name: Ensure user home exists
+      ansible.builtin.file:
+        path: "/home/{{ remote_user_name }}"
+        state: directory
+        owner: "{{ remote_user_name }}"
+        group: "{{ remote_user_name }}"
+        mode: "0755"
+
+    - name: Set XFCE session startup in ~/.xsession
+      ansible.builtin.copy:
+        dest: "/home/{{ remote_user_name }}/.xsession"
+        content: |
+          xfce4-session
+        owner: "{{ remote_user_name }}"
+        group: "{{ remote_user_name }}"
+        mode: "0644"
+
+    - name: Ensure ~/.config exists
+      ansible.builtin.file:
+        path: "/home/{{ remote_user_name }}/.config"
+        state: directory
+        owner: "{{ remote_user_name }}"
+        group: "{{ remote_user_name }}"
+        mode: "0755"
+
+    - name: Create optional XFCE xstartup helper
+      ansible.builtin.copy:
+        dest: "/home/{{ remote_user_name }}/.config/xstartup"
+        content: |
+          #!/bin/sh
+          exec startxfce4
+        owner: "{{ remote_user_name }}"
+        group: "{{ remote_user_name }}"
+        mode: "0755"
+
+    - name: Replace XRDP startwm.sh with XFCE-friendly launcher
+      ansible.builtin.copy:
+        dest: /etc/xrdp/startwm.sh
+        owner: root
+        group: root
+        mode: "0755"
+        content: |
+          #!/bin/sh
+          unset DBUS_SESSION_BUS_ADDRESS
+          unset XDG_RUNTIME_DIR
+          exec startxfce4
+      notify: restart xrdp
+
+    - name: Remove stale XFCE session cache
+      ansible.builtin.file:
+        path: "/home/{{ remote_user_name }}/.cache/sessions"
+        state: absent
+
+    - name: Remove stale xfce4-session config
+      ansible.builtin.file:
+        path: "/home/{{ remote_user_name }}/.config/xfce4-session"
+        state: absent
+
+    - name: Recreate ~/.cache directory
+      ansible.builtin.file:
+        path: "/home/{{ remote_user_name }}/.cache"
+        state: directory
+        owner: "{{ remote_user_name }}"
+        group: "{{ remote_user_name }}"
+        mode: "0755"
+
+    - name: Ensure XRDP service is enabled and started
+      ansible.builtin.systemd:
+        name: xrdp
+        state: started
+        enabled: true
+```
+Replace `your_username` or pass `-e remote_user_name=....` (see below)
+
+Minimal inventory:
+```
+[xubuntu_vm]
+<our ip> ansible_user=<our user>
+```
+Run it:
+```
+ansible-playbook -i inventory.ini setup-xrdp-xubuntu.yml -e remote_user_name=<our user>
+```
